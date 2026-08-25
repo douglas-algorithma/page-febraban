@@ -23,7 +23,7 @@ mais importa: **`fonte.tIn`/`tOut` obrigatórios**, janelas contíguas (o fim de
 uma cena é o início da próxima) e a soma batendo com a duração do vídeo dentro
 de 100 ms. Sem isso o ritmo volta a ser palpite.
 
-**3. Suíte Playwright** — 8 specs, **629 testes** (0 falhando, 4 skips):
+**3. Suíte Playwright** — 8 specs, **632 testes** (0 falhando, 4 skips):
 
 | Spec | O que garante |
 |---|---|
@@ -32,7 +32,7 @@ de 100 ms. Sem isso o ritmo volta a ser palpite.
 | `responsive.spec.js` | **sobreposição**, transbordo, safe area, sem rolagem, paridade 1080p↔4K |
 | `a11y-touch.spec.js` | alvos ≥88×88, sem dependência de hover, foco, ARIA, contraste |
 | `three-lifecycle.spec.js` | dispose completo, zero alocação em `update()`, vazamento de GPU |
-| `offline.spec.js` | **nenhuma origem externa**: varre o código, checa o import map, e prova que a página monta inteira com toda a rede bloqueada |
+| `offline.spec.js` | **nenhuma origem externa**: varre o código, checa o import map, prova que a página monta com toda a rede bloqueada, e que ela **roda direto de `file://`**, sem servidor nenhum |
 | `regressoes.spec.js` | um teste por bug real já encontrado — ver o registro no fim |
 | `efeitos.spec.js` | a onda de toque se limpa e não intercepta ponteiro; o anel acompanha o relógio; o modo atração não dispara durante o uso; tudo quieto sob `prefers-reduced-motion` |
 
@@ -101,6 +101,10 @@ Diga em voz alta antes de confiar demais nela:
 - **Tela cheia de verdade.** O teste confere o contrato do controle (existe, é
   alvo válido, anuncia estado, não derruba a página); o estado real depende do
   navegador e do sistema, e headless costuma recusar. **Teste na TV.**
+- **Os lançadores.** `abrir-totem.command` e `.bat` foram exercitados em modo
+  seco (acham o navegador, montam os argumentos), mas ninguém deu clique duplo
+  neles numa máquina limpa. O que a suíte garante é o mais importante: que a
+  página **funciona** a partir de `file://`.
 - **A fonte é a certa?** A suíte garante que a Poppins carrega e é aplicada.
   Ninguém confirmou que ela é a fonte oficial da marca CPQD.
 

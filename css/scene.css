@@ -374,14 +374,16 @@
   width: 14.4rem;
 }
 /*
-  Nucleo da mandala, disco lime: no frame de 36s a marca e TODA PRETA — nem
-  o laco colorido, nem o laco vazado em branco. brightness(0) achata
-  qualquer variante para preto solido.
+  Nucleo da mandala, disco lime. Variante propria: letras escuras e o laco
+  TRANSPARENTE, para o gradiente do disco aparecer na trama — e o que o
+  frame de 36s mostra.
+  Nao serve `positiva` com brightness(0): laco e letras viram a mesma cor e o
+  desenho vira um borrao. Nem `mono`, cujo laco e branco e vira mancha
+  sobre o verde.
 */
 .mandala__marca {
-  display: block; width: 5.6rem; aspect-ratio: 1000 / 363;
-  background: url("../assets/cpqd-marca-positiva.svg") center / contain no-repeat;
-  filter: brightness(0);
+  display: block; width: 6.2rem; aspect-ratio: 1000 / 363;
+  background: url("../assets/cpqd-marca-nucleo.svg") center / contain no-repeat;
   font-size: 0; line-height: 0; color: transparent; overflow: hidden;
   margin-top: 1.1rem;   /* respiro entre "ECOSSISTEMA DE SOLUÇÕES" e a marca */
   justify-self: center;

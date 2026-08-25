@@ -3,8 +3,8 @@
  * depende de nenhuma: se algum dia alguem colar um <script src> de CDN, uma
  * @import de Google Fonts ou um fetch de telemetria, quebra aqui.
  */
-import { test, expect } from '@playwright/test'
-import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { test, expect, chromium } from '@playwright/test'
+import { readFileSync, readdirSync, statSync, rmSync } from 'node:fs'
 import { join, extname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { SCENES } from '../js/data/scenes.js'
@@ -110,4 +110,63 @@ test('as libs vendorizadas estao no repositorio, nao em node_modules', async () 
   // three.module.js importa ./three.core.js — os dois precisam existir juntos.
   const three = readFileSync(join(vendor, 'three.module.js'), 'utf8')
   expect(three).toMatch(/from '\.\/three\.core\.js'/)
+})
+
+test('a pagina roda direto do arquivo, sem servidor nenhum', async () => {
+  /*
+    O totem do estande pode nao ter node nem python. Com a flag
+    --allow-file-access-from-files o navegador libera ES modules locais e a
+    pagina abre direto de file:// — e o que abrir-totem.command faz.
+
+    Este teste guarda essa propriedade: qualquer coisa que passe a exigir um
+    servidor de verdade (um fetch, um XHR, um Worker de arquivo separado)
+    quebra aqui antes de quebrar no estande.
+  */
+  const indice = fileURLToPath(new URL('../index.html', import.meta.url))
+  const perfil = join(RAIZ, '.perfil-teste-file')
+
+  const ctx = await chromium.launchPersistentContext(perfil, {
+    args: ['--allow-file-access-from-files'],
+    viewport: { width: 1920, height: 1080 }
+  })
+  try {
+    const page = await ctx.newPage()
+    const problemas = []
+    page.on('pageerror', (e) => problemas.push('pageerror: ' + e.message))
+    page.on('console', (m) => { if (m.type() === 'error') problemas.push('console: ' + m.text()) })
+    const externas = []
+    page.on('request', (r) => {
+      const u = r.url()
+      if (!u.startsWith('file://') && !u.startsWith('data:') && !u.startsWith('blob:')) externas.push(u)
+    })
+
+    await page.goto(`file://${indice}`)
+    await page.waitForSelector('#app[data-scene-settled="true"]', { timeout: 20_000 })
+
+    const vivo = await page.evaluate(async () => {
+      const { store, stage } = globalThis.__cpqd
+      let comTitulo = 0
+      for (let i = 0; i < 30; i++) {
+        store.ir(i, 'teste'); stage.atualizar(16)
+        if (document.querySelector('.cena h1')?.textContent?.trim()) comTitulo++
+      }
+      await document.fonts.ready
+      return {
+        comTitulo,
+        quadros: stage.info.render.frame,
+        poppins: [...document.fonts].some((f) => f.family === 'Poppins' && f.status === 'loaded'),
+        marca: getComputedStyle(document.querySelector('.marca__cpqd')).backgroundImage.includes('cpqd-marca')
+      }
+    })
+
+    expect(vivo.comTitulo, 'nem toda cena renderizou a partir de file://').toBe(SCENES.length)
+    expect(vivo.quadros, 'three.js nao desenhou a partir de file://').toBeGreaterThan(0)
+    expect(vivo.poppins, 'a fonte vendorizada nao carregou a partir de file://').toBe(true)
+    expect(vivo.marca, 'a marca em SVG nao carregou a partir de file://').toBe(true)
+    expect(externas, `requisicoes para fora:\n${externas.join('\n')}`).toEqual([])
+    expect(problemas).toEqual([])
+  } finally {
+    await ctx.close()
+    rmSync(perfil, { recursive: true, force: true })
+  }
 })
