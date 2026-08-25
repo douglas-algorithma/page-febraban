@@ -41,6 +41,28 @@ for (const cena of SCENES.filter((s) => s.layout === LAYOUTS.SOLUCAO)) {
   })
 }
 
+/*
+  Contrato: NADA do manifesto pode ser silenciosamente descartado na tela.
+  Se alguem acrescentar um campo ao chip e esquecer de renderiza-lo, ou se um
+  pedaco do texto sumir na composicao, isto acusa. Foi assim que apareceu um
+  "de dados" que tinha caido de um chip do Data Center.
+*/
+for (const cena of SCENES.filter((s) => s.layout === LAYOUTS.SOLUCAO)) {
+  test(`solucao "${cena.id}": todo texto do manifesto chega na tela`, async ({ page }) => {
+    await irPara(page, cena.id)
+    const normalizar = (t) => t.replace(/\s+/g, ' ').trim()
+    const naTela = normalizar(await page.locator('.chips').innerText())
+
+    for (const chip of cena.chips) {
+      for (const campo of ['rotulo', 'destaque', 'unidade', 'texto']) {
+        const valor = chip[campo]
+        if (!valor) continue
+        expect(naTela, `"${valor}" (campo ${campo}) nao aparece no card`).toContain(normalizar(valor))
+      }
+    }
+  })
+}
+
 test('a mandala lista exatamente as solucoes do manifesto', async ({ page }) => {
   const mandala = SCENES.find((s) => s.layout === LAYOUTS.MANDALA)
   await irPara(page, mandala.id)
