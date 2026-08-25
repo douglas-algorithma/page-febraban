@@ -33,7 +33,15 @@ export const COLORS = {
   cinza: '#706A7F'
 }
 
-/** Um acento por pilar — usado pela cena 3D e pela etiqueta. */
+/**
+ * Um acento por pilar — usado pela cena 3D de abertura de pilar.
+ *
+ * ATENCAO: os tres acentos vivem na FAMILIA ROXA, do mais escuro ao mais
+ * claro, porque e assim nos cards de titulo do video (46s, 134s, 178s): a
+ * atmosfera e sempre violeta e o verde-limao aparece apenas no SUBTITULO,
+ * nunca no ambiente. Usar lime como acento pintava o card inteiro de
+ * verde-oliva. Os mesmos tons ordenam os itens da mandala.
+ */
 export const PILLARS = {
   'seguranca-digital': {
     id: 'seguranca-digital',
@@ -46,14 +54,14 @@ export const PILLARS = {
     id: 'confianca-digital',
     nome: 'Confiança Digital',
     lema: 'Garantindo autenticidade em cada interação',
-    acento: COLORS.lime,
+    acento: '#5C33A0',
     icone: 'digital'
   },
   'operacoes-inteligentes': {
     id: 'operacoes-inteligentes',
     nome: 'Operações Inteligentes',
     lema: 'Transformando dados em eficiência operacional',
-    acento: COLORS.lilas,
+    acento: '#8A5FC4',
     icone: 'cerebro'
   },
   'inovacao-aplicada': {
@@ -63,7 +71,7 @@ export const PILLARS = {
     // outros tres pilares em vez de ocupar um setor. Por isso nao tem card
     // de titulo proprio nem bloco de solucoes.
     lema: 'O anel que envolve todo o ecossistema',
-    acento: COLORS.limeSuave,
+    acento: COLORS.lilas,
     icone: 'lampada'
   }
 }
