@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./css/scene.css">
 <link rel="stylesheet" href="./css/hud.css">
 <link rel="stylesheet" href="./css/menu.css">
+<link rel="stylesheet" href="./css/efeitos.css">
 <script type="importmap">
 {
   "imports": {
@@ -53,6 +54,12 @@
       <span class="botao__glifo" aria-hidden="true">‹</span>
     </button>
     <button type="button" class="botao" id="btn-play" aria-label="Pausar reprodução automática" aria-pressed="false">
+      <!-- Anel de progresso da CENA atual. SVG porque o background do botao
+           muda com a superficie e sobrescreveria um conic-gradient. -->
+      <svg class="anel-cena" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="anel-cena__trilho" cx="50" cy="50" r="44"/>
+        <circle class="anel-cena__arco" cx="50" cy="50" r="44"/>
+      </svg>
       <span class="botao__glifo" id="btn-play-glifo" aria-hidden="true">❚❚</span>
     </button>
     <button type="button" class="botao" id="btn-proxima" aria-label="Próxima cena">

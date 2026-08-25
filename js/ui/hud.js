@@ -50,6 +50,10 @@ export function createHud ({ store }) {
     const razao = Math.max(0, Math.min(decorrido / total, 1))
     barraEl.style.width = `${(razao * 100).toFixed(2)}%`
     progressoEl.setAttribute('aria-valuenow', String(Math.round(razao * 100)))
+
+    // Anel do botao de reproducao: quanto falta da CENA, nao da apresentacao.
+    const naCena = s.cena.durationMs > 0 ? dentro / s.cena.durationMs : 0
+    btnPlay.style.setProperty('--cena-progresso', naCena.toFixed(3))
   }
 
   return {

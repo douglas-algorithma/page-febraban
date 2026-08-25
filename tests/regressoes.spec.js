@@ -246,3 +246,16 @@ test('o cursor some quando ninguem mexe', async ({ page }) => {
   const estilo = await page.evaluate(() => getComputedStyle(document.body).cursor)
   expect(estilo).toBe('none')
 })
+
+test('navegacao em rajada nao deixa cards fantasma no DOM', async ({ page }) => {
+  /*
+    O crossfade guarda um retrato do card que sai. Em rajada um retrato pode
+    nao ter terminado de sumir quando o proximo chega — sem limpeza, sobrariam
+    varios <h1> no DOM e qualquer leitura de titulo passaria a mentir.
+  */
+  await irPara(page, SCENES[0].id)
+  for (let i = 0; i < 12; i++) await page.click('#btn-proxima')
+  await page.waitForSelector('#app[data-scene-settled="true"]')
+  await expect(page.locator('.cena h1')).toHaveCount(1)
+  await expect(page.locator('.cena .card')).toHaveCount(1)
+})

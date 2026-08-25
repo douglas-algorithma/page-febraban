@@ -11,7 +11,7 @@ js/
   data/scenes.js    O MANIFESTO — tudo deriva daqui
   data/brand.js     paleta e pilares (fonte única da cor)
   engine/           store, clock, router, input
-  ui/               scene-view, hud, menu, mandala, icons, qr, logo, fullscreen
+  ui/               scene-view, hud, menu, mandala, icons, qr, fullscreen, efeitos
   three/            stage + scenes/ (registro)
   vendor/           three 0.185.1, gsap 3.13.0
 scripts/            serve, ingest-video, syntax-check, validate-manifest, vendor
@@ -111,6 +111,22 @@ A cena 3D `roda-mandala` sobrou como um halo lilás de respiro atrás dela.
 na TV do estande o visitante não pode ver Chrome nenhum. Precisa partir de um
 gesto do usuário (regra dos navegadores), então vive num botão do HUD e na
 tecla **F**. O mesmo módulo esconde o cursor após 3 s sem interação.
+
+### Efeitos de presença
+
+`js/ui/efeitos.js` + `css/efeitos.css`. Nada aqui muda conteúdo ou navegação:
+
+- **onda de toque** — numa TV grande o visitante precisa de confirmação
+  imediata de que a tela registrou o toque; sem isso ele toca de novo;
+- **anel no botão de reprodução** — quanto falta da cena atual, para o visitante
+  decidir entre esperar e tocar em "próxima". É SVG, não `conic-gradient`,
+  porque o `background` do botão muda com a superfície e apagaria a imagem;
+- **crossfade na troca** — o card que sai também anima; antes ele sumia num
+  quadro só e a troca dava um "pulo" que o vídeo não tem;
+- **modo atração** — após 3 min sem interação a apresentação volta ao início.
+
+Tudo some sob `prefers-reduced-motion`, e a camada de ondas é
+`pointer-events: none` — há teste para as duas coisas.
 
 ## Decisões de layout que sustentam o QA
 

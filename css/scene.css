@@ -3,7 +3,10 @@
   O fundo animado vem do canvas 3D; aqui mora o texto.
 */
 
-.cena { display: grid; min-height: 0; outline: none; }
+.cena { position: relative; display: grid; min-height: 0; outline: none; }
+/* O card que entra fica por cima do retrato do que sai (ver scene-view.js). */
+.cena > .card { grid-area: 1 / 1; z-index: 1; }
+.cena > .card[aria-hidden="true"] { z-index: 0; }
 
 .card {
   position: relative;              /* ancora .moeda dentro do card, nao no #app */

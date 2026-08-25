@@ -23,7 +23,7 @@ mais importa: **`fonte.tIn`/`tOut` obrigatórios**, janelas contíguas (o fim de
 uma cena é o início da próxima) e a soma batendo com a duração do vídeo dentro
 de 100 ms. Sem isso o ritmo volta a ser palpite.
 
-**3. Suíte Playwright** — 7 specs, **611 testes** (0 falhando, 4 skips):
+**3. Suíte Playwright** — 8 specs, **629 testes** (0 falhando, 4 skips):
 
 | Spec | O que garante |
 |---|---|
@@ -34,6 +34,7 @@ de 100 ms. Sem isso o ritmo volta a ser palpite.
 | `three-lifecycle.spec.js` | dispose completo, zero alocação em `update()`, vazamento de GPU |
 | `offline.spec.js` | **nenhuma origem externa**: varre o código, checa o import map, e prova que a página monta inteira com toda a rede bloqueada |
 | `regressoes.spec.js` | um teste por bug real já encontrado — ver o registro no fim |
+| `efeitos.spec.js` | a onda de toque se limpa e não intercepta ponteiro; o anel acompanha o relógio; o modo atração não dispara durante o uso; tudo quieto sob `prefers-reduced-motion` |
 
 As asserções de navegação usam `esperarCena()`, que confere **a tela** (título
 renderizado + cena 3D montada) além do estado. Comparar só o store foi o que

@@ -33,5 +33,39 @@ mudança em nenhum outro módulo.
 
 ## Controles
 
-Toque na mandala para ir a uma solução. Setas ← →, espaço pausa, **M** abre o
-menu, Escape fecha. Swipe horizontal na TV. A apresentação roda em laço.
+| | |
+|---|---|
+| Toque na mandala | vai para aquela solução |
+| Toque num setor da roda | vai para o card do pilar |
+| ← → ↑ ↓ | cena anterior / próxima |
+| espaço | pausa e retoma |
+| **M** | abre o menu · **Esc** fecha |
+| **F** | tela cheia |
+| swipe horizontal | navega |
+
+A apresentação roda em laço. Depois de 3 minutos sem ninguém tocar, ela volta
+sozinha para o início — é um totem, não pode amanhecer parada no card 23.
+
+## Rodando no totem
+
+A página precisa de um servidor (ES modules não carregam de `file://`). Nada
+sai para a internet: o servidor é local e serve só os arquivos do projeto.
+
+```bash
+npm run dev        # http://127.0.0.1:4173
+```
+
+Para esconder a aba e a barra de endereço, o mais confiável é abrir o navegador
+já em modo quiosque — melhor que o botão de tela cheia, porque sobrevive a um
+recarregamento:
+
+```bash
+# macOS
+open -a "Google Chrome" --args --kiosk --app=http://127.0.0.1:4173
+
+# Linux
+google-chrome --kiosk --app=http://127.0.0.1:4173
+```
+
+Se preferir abrir normal, o botão **⛶** no canto inferior direito (ou a tecla
+**F**) entra em tela cheia. O cursor some sozinho após 3 s parado.

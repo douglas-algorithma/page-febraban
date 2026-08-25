@@ -252,9 +252,31 @@ export function createSceneView ({ raiz, app, store }) {
   let timeline = null
   let desenhada = null
 
-  function desenhar (cena) {
+  function desenhar (cena, anterior) {
     timeline?.kill()
     app.dataset.sceneSettled = 'false'
+
+    /*
+      Crossfade de verdade: o card que sai tambem anima. Antes ele
+      desaparecia num quadro so, e a troca ficava com um "pulo" que o video
+      nao tem — la as cenas se dissolvem uma na outra.
+      O clone e um retrato do card antigo; some sozinho no fim do tween.
+    */
+    // Em navegacao muito rapida um retrato pode nao ter terminado de sumir.
+    // Limpa antes de por outro, senao sobram varios h1 no DOM.
+    raiz.querySelectorAll('.card[aria-hidden="true"]').forEach((c) => c.remove())
+
+    if (anterior && !menosMovimento()) {
+      anterior.style.position = 'absolute'
+      anterior.style.inset = '0'
+      anterior.style.pointerEvents = 'none'
+      anterior.setAttribute('aria-hidden', 'true')
+      raiz.append(anterior)
+      gsap.to(anterior, {
+        opacity: 0, scale: 0.985, duration: 0.34, ease: 'power2.in',
+        onComplete: () => anterior.remove()
+      })
+    }
     app.dataset.superficie = superficieDe(cena)
     app.dataset.layout = cena.layout
     raiz.dataset.superficie = superficieDe(cena)
@@ -314,7 +336,9 @@ export function createSceneView ({ raiz, app, store }) {
   const desinscrever = store.subscribe((s) => {
     if (s.cena.id === desenhada) return
     desenhada = s.cena.id
-    desenhar(s.cena)
+    // Retrato do card que sai, para o crossfade.
+    const anterior = raiz.querySelector('.card')?.cloneNode(true) ?? null
+    desenhar(s.cena, anterior)
   })
 
   return {
