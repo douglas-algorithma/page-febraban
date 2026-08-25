@@ -176,11 +176,10 @@ export const SCENES = [
     pilar: 'seguranca-digital',
     titulo: 'Ensaios para POS e Meios de Pagamento',
     icone: 'pos',
-    metrica: true,
     chips: [
-      { destaque: 'Atendemos 90%', texto: 'das adquirentes' },
+      { rotulo: 'Atendemos', destaque: '90%', texto: 'das adquirentes' },
       { destaque: 'Pioneiros', texto: 'em processos de homologação' },
-      { destaque: 'Do POS à Aplicação', texto: '' }
+      { rotulo: 'Do POS à', destaque: 'Aplicação' }
     ],
     aplicacoes: ['Meios de Pagamento', 'Adquirência', 'Engenharia', 'Qualidade', 'Homologação', 'Segurança da Informação e Tecnologia'],
     scene3d: 'aneis-card',
@@ -354,8 +353,8 @@ export const SCENES = [
     titulo: 'IA Aplicada ao Negócio',
     icone: 'chip-ia',
     chips: [
-      { destaque: 'Mais de 100', texto: 'projetos de IA' },
-      { destaque: 'Metodologia própria', texto: 'vinculando resultado ao negócio' },
+      { rotulo: 'Mais de', destaque: '100', texto: 'projetos de IA' },
+      { rotulo: 'Metodologia própria vinculando', destaque: 'resultado ao negócio' },
       { destaque: 'Governança', texto: 'de IA' }
     ],
     aplicacoes: ['Inovação', 'Tecnologia', 'Operações', 'Negócios', 'Atendimento', 'Indústria', 'Financeiro', 'Saúde', 'Telecomunicações', 'Setor Público'],
@@ -370,9 +369,9 @@ export const SCENES = [
     titulo: 'Data Center — Gerência da Planta',
     icone: 'rack',
     chips: [
-      { destaque: 'Gestão de ativos', texto: 'em operadoras nacionais e internacionais' },
+      { rotulo: 'Gestão de ativos em operadoras', destaque: 'nacionais e internacionais' },
       { destaque: 'Flexibilidade', texto: 'para inclusão de ativos de data centers' },
-      { destaque: 'Migração em larga escala', texto: 'com 99,9% de efetividade' }
+      { rotulo: 'Migração de dados em larga escala com', destaque: '99,9% de efetividade' }
     ],
     aplicacoes: ['Infraestrutura de TI', 'Operações de Data Center', 'Facilities', 'Redes', 'Operações Críticas', 'Cloud', 'Continuidade de Negócios', 'Gestão de Ativos'],
     scene3d: 'aneis-card',
@@ -403,7 +402,6 @@ export const SCENES = [
     pilar: 'operacoes-inteligentes',
     titulo: 'Gestão Inteligente de POS',
     icone: 'grafico',
-    metrica: true,
     chips: [
       { destaque: 'De 30% a 40%', texto: 'Menos custos logísticos' },
       { destaque: '+5% a 10%', texto: 'Potencial de aumento no TPV (Volume Total de Pagamentos)' },
