@@ -1,0 +1,40 @@
+/*
+  Tokens de medida. As CORES nao moram aqui: elas vem de js/data/brand.js
+  (applyBrandTokens) para existir uma unica fonte de verdade da paleta.
+  O fundo abaixo e so a cor de espera ate o modulo rodar.
+*/
+:root {
+  /*
+    Escala tipografica ancorada no projeto de 1920x1080. Em 4K tudo dobra
+    sozinho porque a raiz cresce junto: 1rem = 16px em 1080p, 32px em 2160p.
+    Nao ha media query de resolucao — a TV so muda de tamanho, nao de layout.
+  */
+  font-size: min(calc(100vw / 120), calc(100vh / 67.5));
+
+  /* Alvo de toque. O piso de 88px e fisico e nao pode encolher com a raiz. */
+  --toque: max(5.5rem, 88px);
+
+  /* Safe area de 4% exigida para TV. */
+  --safe: 4%;
+
+  --esp-1: 0.5rem;
+  --esp-2: 1rem;
+  --esp-3: 1.5rem;
+  --esp-4: 2rem;
+  --esp-6: 3rem;
+  --esp-8: 4rem;
+
+  --raio: 1rem;
+  --raio-pilula: 999rem;
+
+  --dur-rapida: 240ms;
+  --dur-media: 520ms;
+  --dur-entrada: 720ms;
+
+  /* cor de espera — substituida por brand.js */
+  --c-roxo-noite: #20112C;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-rapida: 1ms; --dur-media: 1ms; --dur-entrada: 1ms; }
+}

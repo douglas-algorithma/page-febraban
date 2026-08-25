@@ -1,0 +1,20 @@
+{
+  "name": "page-cpqd-video",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Versao web interativa para TV touch do video institucional do CPQD no Febraban Tech",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "syntax": "node scripts/syntax-check.mjs",
+    "validate": "node scripts/validate-manifest.mjs",
+    "test": "playwright test",
+    "qa": "npm run syntax && npm run validate && npm run test",
+    "vendor": "node scripts/vendor.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "three": "0.185.1",
+    "gsap": "3.13.0"
+  }
+}

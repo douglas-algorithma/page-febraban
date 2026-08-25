@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CPQD · Soluções Inteligentes para o setor Financeiro</title>
+<meta name="description" content="Versão interativa do vídeo institucional do CPQD no Febraban Tech.">
+<link rel="stylesheet" href="./css/tokens.css">
+<link rel="stylesheet" href="./css/base.css">
+<link rel="stylesheet" href="./css/scene.css">
+<link rel="stylesheet" href="./css/hud.css">
+<link rel="stylesheet" href="./css/menu.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./js/vendor/three.module.js",
+    "gsap": "./js/vendor/gsap/index.js"
+  }
+}
+</script>
+</head>
+<body>
+<!--
+  #app e um grid de 3 linhas: cabecalho | palco | controles.
+  O cabecalho e os controles ocupam LINHAS PROPRIAS. Por construcao eles nao
+  podem cair por cima do titulo da cena — foi exatamente esse o bug que a
+  suite deixou passar uma vez (elementos sobrepostos em camadas diferentes,
+  sem transbordo e com contraste suficiente). O teste de sobreposicao em
+  tests/responsive.spec.js guarda essa propriedade.
+-->
+<div id="app" data-scene-settled="false">
+  <canvas id="palco" aria-hidden="true"></canvas>
+
+  <header id="hud-topo" class="hud hud--topo">
+    <div class="hud__marca" aria-hidden="true">
+      <span class="marca__cpqd">cpqd</span>
+    </div>
+    <p class="hud__pilar" id="hud-pilar"></p>
+    <p class="hud__contador" id="hud-contador"></p>
+  </header>
+
+  <main id="cena" class="cena" tabindex="-1" aria-live="polite"></main>
+
+  <nav id="hud-base" class="hud hud--base" aria-label="Controles de navegação">
+    <button type="button" class="botao" id="btn-anterior" aria-label="Cena anterior">
+      <span class="botao__glifo" aria-hidden="true">‹</span>
+    </button>
+    <button type="button" class="botao" id="btn-play" aria-label="Pausar reprodução automática" aria-pressed="false">
+      <span class="botao__glifo" id="btn-play-glifo" aria-hidden="true">❚❚</span>
+    </button>
+    <button type="button" class="botao" id="btn-proxima" aria-label="Próxima cena">
+      <span class="botao__glifo" aria-hidden="true">›</span>
+    </button>
+    <div class="progresso" id="progresso" role="progressbar" aria-label="Progresso da apresentação" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progresso__trilho"><div class="progresso__preenchido" id="progresso-preenchido"></div></div>
+    </div>
+    <button type="button" class="botao botao--menu" id="btn-menu" aria-label="Abrir menu de soluções" aria-expanded="false" aria-controls="menu">
+      <span class="botao__glifo" aria-hidden="true">☰</span>
+      <span class="botao__rotulo">Soluções</span>
+    </button>
+  </nav>
+
+  <aside id="menu" class="menu" hidden aria-label="Menu de soluções">
+    <div class="menu__cabecalho">
+      <h2 class="menu__titulo">Ecossistema de Soluções</h2>
+      <button type="button" class="botao botao--fechar" id="btn-fechar-menu" aria-label="Fechar menu">
+        <span class="botao__glifo" aria-hidden="true">✕</span>
+      </button>
+    </div>
+    <div class="menu__corpo" id="menu-corpo"></div>
+  </aside>
+</div>
+
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>

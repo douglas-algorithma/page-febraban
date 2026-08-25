@@ -1,0 +1,4 @@
+three 0.185.1
+gsap  3.13.0
+
+Gerado por scripts/vendor.mjs. Nao editar a mao.

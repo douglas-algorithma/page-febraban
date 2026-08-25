@@ -1,0 +1,241 @@
+/*
+  Layouts de card. Cada um reproduz um enquadramento observado no video.
+  O fundo animado vem do canvas 3D; aqui mora o texto.
+*/
+
+.cena {
+  display: grid;
+  min-height: 0;
+  outline: none;
+}
+
+.card {
+  position: relative;              /* ancora .moeda dentro do card, nao no #app */
+  display: grid;
+  min-height: 0;
+  height: 100%;
+  align-content: center;
+  gap: var(--esp-4);
+  opacity: 0;                       /* GSAP anima ate 1 na entrada */
+}
+
+/* ─────────────────────────────────────────── abertura e titulo de pilar */
+.card--abertura,
+.card--titulo-pilar,
+.card--encerramento {
+  align-content: center;
+  justify-items: start;
+  padding-inline: var(--esp-8);
+}
+
+.card--abertura .card__titulo {
+  font-size: 5.2rem;
+  line-height: 1.05;
+  font-weight: 800;
+  color: var(--c-lime);
+  max-width: 20ch;
+  margin: 0;
+}
+.card--abertura .card__subtitulo {
+  font-size: 2.1rem;
+  line-height: 1.4;
+  color: var(--c-branco);
+  max-width: 34ch;
+  margin: 0;
+}
+
+.card--titulo-pilar { justify-items: center; text-align: center; }
+.card--titulo-pilar .card__titulo {
+  font-size: 6rem;
+  font-weight: 800;
+  color: var(--c-branco);
+  margin: 0;
+  text-shadow: 0 0 3rem rgb(0 0 0 / 0.6);
+}
+.card--titulo-pilar .card__subtitulo {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: var(--c-lime);
+  margin: 0;
+}
+
+/* ───────────────────────────────────────────────────── quatro pilares */
+/*
+  No video o "C" da marca ocupa a faixa esquerda e o texto vive na direita.
+  Reservar essa faixa e o que impede o titulo de cair por cima do 3D.
+*/
+.card--pilares {
+  align-content: center;
+  gap: var(--esp-4);
+  padding-inline-start: 36%;
+  padding-inline-end: var(--esp-4);
+}
+.card--pilares .card__titulo {
+  font-size: 4rem; font-weight: 800; margin: 0; max-width: 24ch;
+  color: var(--c-branco);
+}
+
+.card--pilares .card__subtitulo {
+  font-size: 1.9rem; line-height: 1.5; max-width: 52ch; margin: 0;
+  color: var(--c-branco);
+}
+.pilares { display: flex; gap: var(--esp-6); flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+.pilares__item { display: grid; justify-items: center; gap: var(--esp-2); text-align: center; }
+.pilares__disco {
+  width: max(7rem, 96px); height: max(7rem, 96px);
+  border-radius: 50%;
+  border: 0.22rem solid var(--c-lime);
+  background: var(--c-roxo-medio);
+  display: grid; place-items: center;
+}
+.pilares__disco svg { width: 55%; height: 55%; }
+.pilares__nome { font-size: 1.4rem; font-weight: 800; color: var(--c-branco); letter-spacing: 0.04em; }
+.pilares__nome span { display: block; color: var(--c-lime); }
+
+/* ────────────────────────────────────────────────────── card de solucao */
+.card--solucao {
+  align-content: start;
+  gap: var(--esp-3);
+  padding: var(--esp-3) var(--esp-4) var(--esp-3) 15rem;  /* espaco da moeda */
+  color: var(--c-roxo);
+}
+
+.card__cabecalho { display: flex; align-items: center; gap: var(--esp-3); }
+.card__icone { width: 7rem; height: 7rem; flex: none; color: var(--c-roxo); }
+.card__icone svg { width: 100%; height: 100%; }
+.card--solucao .card__titulo {
+  font-size: 4.4rem; line-height: 1.08; font-weight: 800;
+  color: var(--c-roxo); margin: 0; max-width: 22ch;
+}
+
+.chips { display: flex; gap: var(--esp-2); flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+.chip {
+  flex: 1 1 0;
+  min-width: 14rem;
+  background: var(--c-roxo-medio);
+  border: 0.14rem solid var(--c-lime);
+  border-radius: var(--raio);
+  padding: var(--esp-2) var(--esp-2);
+  display: grid; gap: 0.25rem; align-content: start;
+  text-align: center;
+}
+.chip__rotulo { font-size: 1.35rem; font-weight: 700; color: var(--c-branco); }
+.chip__destaque { font-size: 1.9rem; font-weight: 800; color: var(--c-lime); line-height: 1.15; }
+.chip__unidade { font-size: 1.5rem; font-weight: 800; color: var(--c-lime); }
+.chip__texto { font-size: 1.35rem; line-height: 1.35; color: var(--c-branco); }
+
+/* Cards de numero: o destaque cresce e domina o chip. */
+.chip--metrica .chip__destaque { font-size: 3.1rem; }
+
+.aplicacoes {
+  background: var(--c-lime);
+  color: var(--c-roxo);
+  border-radius: var(--raio-pilula);
+  padding: var(--esp-2) var(--esp-3);
+  font-size: 1.45rem; font-weight: 700; line-height: 1.4;
+  margin: 0;
+}
+.aplicacoes b { font-weight: 800; }
+
+/* Moeda do pilar + aneis concentricos, canto inferior esquerdo (como no video) */
+.moeda {
+  position: absolute;
+  left: 0.5rem; bottom: 0.5rem;
+  width: 13rem;
+  display: grid; justify-items: center; gap: var(--esp-1);
+  pointer-events: none;
+}
+.moeda__disco {
+  width: 7.4rem; height: 7.4rem; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #5A3A93, #1B0F2E 70%);
+  border: 0.18rem solid rgb(255 255 255 / 0.28);
+  display: grid; place-items: center;
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.35);
+}
+.moeda__disco svg { width: 52%; height: 52%; color: #fff; }
+.moeda__etiqueta {
+  background: var(--c-quase-carvao);
+  color: var(--c-branco);
+  font-size: 1.15rem; font-weight: 800; letter-spacing: 0.06em;
+  padding: 0.5rem 1rem; border-radius: 0.5rem; white-space: nowrap;
+  text-transform: uppercase;
+}
+
+
+/* ──────────────────────────────────────────────────────────── mandala */
+.card--mandala {
+  align-content: center;
+  justify-items: stretch;
+  gap: var(--esp-2);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  overflow: hidden;                /* nada escapa por cima do titulo */
+}
+.card--mandala .card__titulo { font-size: 2.4rem; font-weight: 800; color: var(--c-roxo); margin: 0; text-align: center; }
+.card--mandala .card__subtitulo { font-size: 1.4rem; color: var(--c-roxo-medio); margin: 0; text-align: center; }
+
+.mandala {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--esp-2);
+  align-items: center;
+  min-height: 0;
+}
+/*
+  Cada lado tem 9 solucoes. Em UMA coluna nao cabem 9 alvos de 88px na altura
+  util da TV — por isso cada lado e um grid de 2 colunas x 5 linhas. O alvo
+  continua com o piso de 88px; o que muda e a largura, nao a area tocavel.
+*/
+.mandala__coluna {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(var(--toque), auto);
+  gap: 0.5rem;
+  align-content: center;
+  min-height: 0;
+}
+.mandala__centro { display: grid; place-items: center; }
+.mandala__nucleo {
+  width: 13rem; height: 13rem; border-radius: 50%;
+  background: var(--c-lime);
+  display: grid; place-items: center; text-align: center;
+  font-size: 1rem; font-weight: 800; color: var(--c-roxo);
+  line-height: 1.25; padding: var(--esp-2);
+}
+.mandala__nucleo strong { font-size: 1.6rem; }
+
+.mandala__item {
+  display: flex; align-items: center; gap: 0.5rem;
+  min-height: var(--toque);
+  padding: 0.5rem 0.7rem;
+  border: 0; border-radius: 0.6rem;
+  background: var(--c-roxo-medio);
+  color: var(--c-branco);
+  font-size: 1.05rem; font-weight: 600; line-height: 1.2;
+  text-align: left; cursor: pointer;
+  box-shadow: 0 0.3rem 0.6rem rgb(0 0 0 / 0.22);
+}
+.mandala__item svg { width: 1.7rem; height: 1.7rem; flex: none; }
+.mandala__item[data-pilar="confianca-digital"] { background: #5C33A0; }
+.mandala__item[data-pilar="operacoes-inteligentes"] { background: #8A5FC4; }
+
+/* ──────────────────────────────────────────────────────────────── CTA */
+.card--cta { align-content: center; justify-items: center; text-align: center; gap: var(--esp-3); }
+.card--cta .card__titulo { font-size: 4.2rem; font-weight: 800; color: var(--c-roxo); margin: 0; }
+
+.card--cta .card__subtitulo { font-size: 1.7rem; color: var(--c-roxo-medio); max-width: 46ch; margin: 0; }
+.qr { width: 18rem; height: 18rem; background: #fff; border: 0.4rem solid var(--c-lime); border-radius: var(--raio); padding: var(--esp-1); }
+.qr svg { width: 100%; height: 100%; }
+
+/* ─────────────────────────────────────────────────────── encerramento */
+.card--encerramento { justify-items: center; text-align: center; }
+.card--encerramento .card__titulo { font-size: 4rem; color: var(--c-branco); margin: 0; }
+
+/* superficie clara para os layouts que no video sao sobre branco */
+.cena[data-superficie="clara"] { color: var(--c-roxo); }
+
+/*
+  O destaque do titulo e so COR, nunca italico — e assim no video.
+  A cor sai do contexto: lilas no escuro, roxo medio no claro.
+*/
+.card__titulo em { font-style: normal; color: var(--c-lilas); }
+.cena[data-superficie="clara"] .card__titulo em { color: var(--c-roxo-medio); }
