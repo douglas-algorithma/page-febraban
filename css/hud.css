@@ -83,3 +83,6 @@
   Na superficie clara o .hud__marca vira o painel roxo do video, e a marca
   continua NEGATIVA dentro dele. Nao e descuido — e o que o video faz.
 */
+
+/* Em TV touch o ponteiro parado no meio da tela e um defeito visivel. */
+body[data-cursor="oculto"] { cursor: none; }

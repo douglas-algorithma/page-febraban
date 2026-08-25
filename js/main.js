@@ -11,6 +11,7 @@ import { conectarInput } from './engine/input.js'
 import { createSceneView } from './ui/scene-view.js'
 import { createHud } from './ui/hud.js'
 import { createMenu } from './ui/menu.js'
+import { createFullscreen } from './ui/fullscreen.js'
 import { createStage } from './three/stage.js'
 
 applyBrandTokens()
@@ -25,6 +26,7 @@ const stage = createStage(canvas, COLORS)
 const view = createSceneView({ raiz: cena, app, store })
 const hud = createHud({ store })
 const menu = createMenu({ store })
+const telaCheia = createFullscreen()
 
 conectarRouter(store)
 conectarInput(store)
@@ -54,4 +56,4 @@ const clock = createClock({
 clock.iniciar()
 
 // Superficie de teste: a suite le daqui em vez de espiar variaveis internas.
-globalThis.__cpqd = { store, stage, clock, view, hud, menu }
+globalThis.__cpqd = { store, stage, clock, view, hud, menu, telaCheia }

@@ -26,17 +26,32 @@ sobre os 15.373 frames), agregada em janelas de 0,5 s. O padrão é inequívoco:
 `./scripts/ingest-video.sh <mp4>` reproduz tudo isso em `.ingest/`
 (`ritmo.txt` traz as janelas de repouso já recortadas).
 
+## Uma cena que quase ficou de fora
+
+O card institucional de fundo **verde-limão** (9,7 s – 15,5 s) não apareceu na
+primeira leitura do ritmo: a energia de mudança **não cai** entre a abertura e
+ele, porque a transição é uma cortina animada, sem quadro em repouso no meio.
+Foi achado comparando frame a frame — a cor média do quadro vira verde entre
+9,7 s e 15,5 s.
+
+É o único card lime da peça e traz os **únicos números institucionais**:
++750 clientes, +2 mil softwares registrados, atuação na América Latina e Europa,
+e as três linhas de negócios.
+
+Lição para a próxima ingestão: energia de mudança acha o ritmo, mas **não
+substitui olhar os frames**.
+
 ## Estrutura encontrada
 
 | Cenas | Bloco |
 |---|---|
-| 1–3 | abertura, quatro pilares, mandala |
-| 4–13 | **Segurança Digital**: título + 9 soluções |
-| 14 | mandala (recap) |
-| 15–18 | **Confiança Digital**: título + 3 soluções |
-| 19 | mandala (recap) |
-| 20–26 | **Operações Inteligentes**: título + 6 soluções |
-| 27–29 | mandala final, QR de contato, selo CPQD 50 anos |
+| 1–4 | abertura, institucional, quatro pilares, mandala |
+| 5–14 | **Segurança Digital**: título + 9 soluções |
+| 15 | mandala (recap) |
+| 16–19 | **Confiança Digital**: título + 3 soluções |
+| 20 | mandala (recap) |
+| 21–27 | **Operações Inteligentes**: título + 6 soluções |
+| 28–30 | mandala final, QR de contato, selo CPQD 50 anos |
 
 **A mandala é o dispositivo de navegação do próprio vídeo** — reaparece 3× como
 recapitulação entre pilares. Virou o menu da TV touch sem invenção nenhuma.
@@ -80,6 +95,44 @@ Mandala, a origem é o vídeo:
 | Data Center — Gerência | 99,9% de efetividade |
 | Data Center — Monitoramento | 22 datacenters · 62 AZ · +1.600 · +21 mi · +150 mil |
 | Gestão Inteligente de POS | 30–40% · +5–10% TPV · até 50% |
+
+## Tipografia
+
+O vídeo usa uma geométrica de **'a' de um andar só**, traço monolinear e bojos
+circulares (veja "Avaliação" ou "Aplicações" em qualquer card). A pilha de
+sistema caía em Helvetica Neue, que tem 'a' de dois andares — diferença visível
+em todo texto da tela.
+
+**Poppins** (SIL OFL) é a correspondência livre mais próxima. Vendorizada em
+`assets/fonts/` (8 subsets latin + latin-ext, 52 KB no total) e declarada em
+`css/fonts.css`. Nenhuma requisição de rede em runtime.
+
+⚠️ **Não há confirmação de que Poppins seja a fonte oficial da marca CPQD.**
+É a mais parecida. Se o manual de marca disser outra, troque os arquivos em
+`assets/fonts/` e o nome em `css/fonts.css` — o resto do CSS usa `var(--fonte)`.
+
+## Quebras de linha
+
+Cada título de solução carrega no manifesto o `\n` **na posição em que o vídeo
+quebra** (lido frame a frame). Sem isso a quebra dependia da largura da coluna e
+alguns títulos iam a três linhas onde o vídeo usa duas.
+
+## A marca
+
+`assets/cpqd-marca-*.svg` — traçados do próprio vídeo, não redesenhados de
+memória:
+
+- **geometria** do selo de 254,5 s, a maior ocorrência do wordmark na peça
+  (465×172 px de letras);
+- **cor e opacidade do laço** resolvidas pelas equações de composição nos
+  quadros de 15 s e 249 s, que têm fundo chapado — dá para separar cor real de
+  alfa em vez de amostrar a cor "por cima do fundo";
+- validado por registro: 99,6 % de coincidência contra o quadro de origem e
+  ~95 % em duas validações cruzadas, em outra escala e outro fundo.
+
+Três variantes, cada uma para um fundo: **negativa** (HUD e selo final),
+**positiva** (CTA sobre card claro) e a mesma positiva achatada em preto por
+`filter: brightness(0)` no núcleo da mandala — que no frame de 36 s é toda preta.
 
 ## Paleta
 

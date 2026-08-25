@@ -121,7 +121,7 @@ export const SCENES = [
     rotuloCurto: 'Teste e Avaliação de Agentes de IA',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
-    titulo: 'Teste e Avaliação de Agentes de IA',
+    titulo: 'Teste e Avaliação\nde Agentes de IA',
     icone: 'robo',
     chips: [
       { destaque: 'Confiabilidade', texto: 'Respostas precisas e consistentes' },
@@ -139,7 +139,7 @@ export const SCENES = [
     rotuloCurto: '**Pentests** de Agentes de IA',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
-    titulo: 'Pentests de Agentes de IA',
+    titulo: 'Pentests de Agentes\nde IA',
     icone: 'engrenagem-binario',
     chips: [
       { destaque: 'Proteção', texto: 'Agentes seguros contra ataques' },
@@ -157,7 +157,7 @@ export const SCENES = [
     rotuloCurto: 'Escalabilidade de IA com Segurança e Privacidade',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
-    titulo: 'Escalabilidade de IA com Segurança e Privacidade',
+    titulo: 'Escalabilidade de IA com\nSegurança e Privacidade',
     icone: 'cerebro-chip',
     chips: [
       { destaque: 'Escala', texto: 'IA pronta para produção' },
@@ -175,7 +175,7 @@ export const SCENES = [
     rotuloCurto: 'Cibersegurança e Resposta a Incidentes',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
-    titulo: 'Cibersegurança e Resposta a Incidentes',
+    titulo: 'Cibersegurança e\nResposta a Incidentes',
     icone: 'escudo-chip',
     chips: [
       { destaque: 'Preparação', texto: 'Maior prontidão contra ataques' },
@@ -193,7 +193,7 @@ export const SCENES = [
     rotuloCurto: 'Credenciais Verificáveis',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
-    titulo: 'Credenciais Verificáveis',
+    titulo: 'Credenciais\nVerificáveis',
     icone: 'documento-check',
     chips: [
       { destaque: 'Confiança', texto: 'Autenticidade e integridade dos dados' },
@@ -211,7 +211,7 @@ export const SCENES = [
     rotuloCurto: 'Ensaios para POS',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
-    titulo: 'Ensaios para POS e Meios de Pagamento',
+    titulo: 'Ensaios para POS e\nMeios de Pagamento',
     icone: 'pos',
     chips: [
       { rotulo: 'Atendemos', destaque: '90%', texto: 'das adquirentes' },
@@ -229,14 +229,14 @@ export const SCENES = [
     rotuloCurto: '**Antifraude:** Transacional, Pix e Adquirente',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
-    titulo: 'Soluções Antifraude Transacional, Pix e Adquirente',
+    titulo: 'Soluções Antifraude\nTransacional, Pix e Adquirente',
     icone: 'escudo-check',
     metrica: true,
     chips: [
       { rotulo: 'Transacional', destaque: '+8,4 bilhões', texto: 'de requisições/ano' },
       { rotulo: 'Pix', destaque: '+12 bilhões', texto: 'de requisições/ano' },
       { rotulo: 'Adquirentes', destaque: '+274,8 bilhões', texto: 'de requisições/ano' },
-      { rotulo: 'Total de Requisições:', destaque: '+295,2', texto: 'bilhões/ano' }
+      { rotulo: 'Total de Requisições:', destaque: '+295,2', unidade: 'bilhões/ano' }
     ],
     aplicacoes: ['Prevenção a Fraudes', 'Meios de Pagamento', 'Adquirência', 'Riscos', 'Segurança da Informação', 'Tecnologia', 'Inovação'],
     scene3d: 'aneis-card',
@@ -249,7 +249,7 @@ export const SCENES = [
     rotuloCurto: '**PLD/FT –** Prevenção à Lavagem de Dinheiro',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
-    titulo: 'Monitoramento PLD/FT',
+    titulo: 'Monitoramento\nPLD/FT',
     icone: 'escudo-cifrao',
     chips: [
       { destaque: 'Conformidade', texto: 'Mais aderência regulatória' },
@@ -267,7 +267,7 @@ export const SCENES = [
     rotuloCurto: 'Criptografia Pós-Quântica',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
-    titulo: 'Criptografia Pós-Quântica',
+    titulo: 'Criptografia\nPós-Quântica',
     icone: 'atomo',
     chips: [
       { destaque: 'Proteção', texto: 'Dados resistentes à ameaça quântica' },
@@ -307,7 +307,7 @@ export const SCENES = [
     rotuloCurto: 'Identidade Digital',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'confianca-digital',
-    titulo: 'Identidade Digital',
+    titulo: 'Identidade\nDigital',
     icone: 'cracha',
     metrica: true,
     chips: [
@@ -345,7 +345,7 @@ export const SCENES = [
     rotuloCurto: 'Soluções de Voz com IA',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'confianca-digital',
-    titulo: 'Soluções de Voz com IA',
+    titulo: 'Soluções de Voz\ncom IA',
     icone: 'onda-voz',
     chips: [
       { destaque: 'Eficiência', texto: 'Menos custos e mais agilidade' },
@@ -385,7 +385,7 @@ export const SCENES = [
     rotuloCurto: 'Higienização de Dados Cadastrais',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
-    titulo: 'Higienização de Dados Cadastrais',
+    titulo: 'Higienização de\nDados Cadastrais',
     icone: 'servidor-no',
     metrica: true,
     chips: [
@@ -403,7 +403,7 @@ export const SCENES = [
     rotuloCurto: 'IA Aplicada ao Negócio',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
-    titulo: 'IA Aplicada ao Negócio',
+    titulo: 'IA Aplicada ao\nNegócio',
     icone: 'chip-ia',
     chips: [
       { rotulo: 'Mais de', destaque: '100', texto: 'projetos de IA' },
@@ -459,7 +459,7 @@ export const SCENES = [
     rotuloCurto: 'Gestão Inteligente de POS',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
-    titulo: 'Gestão Inteligente de POS',
+    titulo: 'Gestão Inteligente\nde POS',
     icone: 'grafico',
     chips: [
       { rotulo: 'De', destaque: '30%', texto: 'a', destaque2: '40%', texto2: 'Menos custos logísticos' },
@@ -477,7 +477,7 @@ export const SCENES = [
     rotuloCurto: 'Gestão de Inadimplência',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
-    titulo: 'Gestão de Inadimplência',
+    titulo: 'Gestão de\nInadimplência',
     icone: 'cifrao',
     chips: [
       { destaque: 'Recuperação', texto: 'Mais receitas recuperadas' },
@@ -543,6 +543,15 @@ export const clampIndex = (i) =>
 /** Duracao total, em ms — sempre igual ao video. */
 export const totalDurationMs = () =>
   SCENES.reduce((soma, s) => soma + s.durationMs, 0)
+
+/*
+ * QUEBRA DE LINHA NOS TITULOS
+ * O `\n` nos titulos de solucao reproduz onde o VIDEO quebra cada um (lido
+ * frame a frame). Sem isso a quebra dependia da largura da coluna e alguns
+ * titulos iam a tres linhas onde o video usa duas.
+ * O renderizador transforma cada linha num <span> de bloco — ver comQuebras
+ * em ui/scene-view.js.
+ */
 
 /**
  * Rotulo da pilula na mandala. No video a roda usa nomes mais curtos que os

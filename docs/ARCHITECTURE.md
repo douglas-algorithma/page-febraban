@@ -11,7 +11,7 @@ js/
   data/scenes.js    O MANIFESTO — tudo deriva daqui
   data/brand.js     paleta e pilares (fonte única da cor)
   engine/           store, clock, router, input
-  ui/               scene-view, hud, menu, icons, qr
+  ui/               scene-view, hud, menu, mandala, icons, qr, logo, fullscreen
   three/            stage + scenes/ (registro)
   vendor/           three 0.185.1, gsap 3.13.0
 scripts/            serve, ingest-video, syntax-check, validate-manifest, vendor
@@ -64,10 +64,17 @@ no manifesto. Nenhum outro arquivo precisa saber.
 (`abertura`, `pilares`, `mandala`, `titulo-pilar`, `solucao`, `cta`,
 `encerramento`); **nenhum id de cena aparece ali**.
 
-**Sinal de assentamento:** ao terminar a timeline de entrada do GSAP a view
-marca `#app[data-scene-settled="true"]`. Medir geometria no meio de um tween lê
-um tamanho menor que o de repouso e produz falha intermitente. Testes esperam
-por esse atributo, **nunca por timeout**.
+**Sinal de assentamento:** ao terminar a timeline de entrada do GSAP **e depois
+que `document.fonts.ready` resolve**, a view marca
+`#app[data-scene-settled="true"]`. Medir geometria no meio de um tween lê um
+tamanho menor que o de repouso; medir antes da fonte carregar lê posições que
+mudam quando a Poppins chega (`font-display: swap`). Testes esperam por esse
+atributo, **nunca por timeout**.
+
+**A view redesenha por mudança de cena, não por `motivo`.** Havia um filtro que
+pulava o motivo `'menu'` para não redesenhar ao abrir/fechar o painel — e ele
+engolia também a navegação **vinda do** menu, que usava o mesmo motivo. Comparar
+o id da cena não tem essa ambiguidade.
 
 ### Contrato 5 — O HUD mostra contexto, não título
 O HUD desenha marca, pilar, contador, progresso e controles. **Nunca o título
@@ -82,6 +89,28 @@ manifesto reordena o menu sem tocar no módulo.
 `js/data/brand.js` tem a paleta e injeta custom properties no `:root`.
 `css/tokens.css` cuida de **medida**, não de cor. Cor nova entra no `brand.js`
 com a origem anotada.
+
+### A roda da mandala é SVG, não 3D
+
+`js/ui/mandala.js` desenha a roda em SVG inline. Motivo: a roda do vídeo tem
+**texto curvo** no anel externo ("INOVAÇÃO" em cima, "APLICADA" embaixo) e três
+setores rotulados com ícone. Malha 3D não faz texto em caminho; SVG faz, fica
+nítido em qualquer resolução, e cada setor vira alvo de toque de verdade — os
+setores navegam para o card de título do respectivo pilar.
+
+As proporções (anel, coroa dos setores, núcleo) foram **medidas no frame de
+36s** e estão anotadas no topo do módulo. Ícone e rótulo ficam a ±19° do meio
+do setor, com o rótulo sempre do lado mais próximo da base da roda — é como o
+vídeo posiciona os três.
+
+A cena 3D `roda-mandala` sobrou como um halo lilás de respiro atrás dela.
+
+### Tela cheia e cursor ocioso
+
+`js/ui/fullscreen.js`. Some com aba, barra de endereço e moldura do navegador —
+na TV do estande o visitante não pode ver Chrome nenhum. Precisa partir de um
+gesto do usuário (regra dos navegadores), então vive num botão do HUD e na
+tecla **F**. O mesmo módulo esconde o cursor após 3 s sem interação.
 
 ## Decisões de layout que sustentam o QA
 

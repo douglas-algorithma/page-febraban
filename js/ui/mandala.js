@@ -14,10 +14,23 @@
 import { PILLARS } from '../data/brand.js'
 import { icone } from './icons.js'
 
+/*
+  Proporcoes MEDIDAS no frame de 36s, tomando o raio do anel de vidro como 1:
+    borda externa dos setores  0,668
+    borda interna dos setores  0,369
+    nucleo verde               0,336
+  Traduzidas para R_ANEL = 45. O nucleo estava a 13,5 — pequeno demais para o
+  texto e a marca, que acabavam se sobrepondo.
+*/
 const R_ANEL = 45      // anel externo (INOVAÇÃO APLICADA)
-const R_SETOR_EXT = 34
-const R_SETOR_INT = 15.5
-const R_NUCLEO = 13.5
+const R_SETOR_EXT = 32.5
+const R_SETOR_INT = 18
+const R_NUCLEO = 16.3
+
+/* Icone e rotulo simetricos a +-19 graus do meio do setor, no meio da coroa —
+   e como o video posiciona os tres. */
+const DESVIO = 19
+const R_CONTEUDO = (R_SETOR_EXT + R_SETOR_INT) / 2
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => (
   { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
@@ -59,15 +72,20 @@ export function rodaSvg () {
     const p = PILLARS[s.id]
     const meio = (s.a0 + s.a1) / 2
     /*
-      Icone na metade EXTERNA da coroa, rotulo na metade INTERNA, separados no
-      raio. Antes os dois disputavam o mesmo ponto e a digital/o cerebro
-      caiam por cima de "CONFIANÇA DIGITAL" / "OPERAÇÕES INTELIGENTES".
+      Separados no ANGULO, nao no raio: assim nenhum dos dois corre por cima
+      do nucleo nem vaza pela borda externa do setor.
+
+      O ROTULO fica no lado mais proximo da base da roda e o icone no lado
+      oposto — e como o video posiciona os tres setores (frame de 36s).
+      `sin` maior significa mais para baixo no sistema do SVG.
     */
-    // Icone PERTO do nucleo, rotulo na borda externa da coroa — e a ordem do
-    // frame de 36s. Ao contrario, o texto horizontal dos setores de baixo
-    // corria por cima do nucleo verde.
-    const [xi, yi] = ponto(R_SETOR_INT + 4.2, meio)
-    const [xt, yt] = ponto(R_SETOR_EXT - 4.6, meio)
+    const a1 = meio - DESVIO
+    const a2 = meio + DESVIO
+    const rad = (g) => (g * Math.PI) / 180
+    const [aRotulo, aIcone] = Math.sin(rad(a1)) > Math.sin(rad(a2)) ? [a1, a2] : [a2, a1]
+
+    const [xi, yi] = ponto(R_CONTEUDO, aIcone)
+    const [xt, yt] = ponto(R_CONTEUDO, aRotulo)
     /*
       O icone volta de icone() como um <svg> SEM width/height. Aninhado dentro
       de outro SVG isso vira 100% do viewport e o desenho estoura a roda —
@@ -75,15 +93,15 @@ export function rodaSvg () {
       dimensao em unidades do viewBox.
     */
     const svgIcone = icone(p.icone).replace(
-      '<svg ', `<svg x="${xi - 3.1}" y="${yi - 3.1}" width="6.2" height="6.2" `)
+      '<svg ', `<svg x="${xi - 4}" y="${yi - 4}" width="8" height="8" `)
     const [primeira, ...resto] = p.nome.split(' ')
     return `<g class="roda__setor" data-ir-pilar="${esc(s.id)}" role="button" tabindex="0"
               aria-label="Ir para o pilar ${esc(p.nome)}">
       <path d="${setor(R_SETOR_INT, R_SETOR_EXT, s.a0, s.a1)}" fill="${s.cor}"/>
       <g class="roda__icone">${svgIcone}</g>
       <text class="roda__rotulo" x="${xt}" y="${yt}" text-anchor="middle">
-        <tspan x="${xt}" dy="0">${esc(primeira.toUpperCase())}</tspan>
-        <tspan x="${xt}" dy="3.4">${esc(resto.join(' ').toUpperCase())}</tspan>
+        <tspan x="${xt}" dy="-0.4">${esc(primeira.toUpperCase())}</tspan>
+        <tspan x="${xt}" dy="3.1">${esc(resto.join(' ').toUpperCase())}</tspan>
       </text>
     </g>`
   }).join('')

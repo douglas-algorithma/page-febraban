@@ -204,3 +204,45 @@ test('com menos movimento a entrada assenta de imediato', async ({ browser }) =>
   await ctx.close()
   expect(gasto, `a entrada levou ${Math.round(gasto)}ms com prefers-reduced-motion`).toBeLessThan(150)
 })
+
+test('o controle de tela cheia existe e obedece ao contrato do totem', async ({ page }) => {
+  /*
+    Na TV do estande o visitante nao pode ver aba nem barra de endereco.
+    O estado real de tela cheia depende do ambiente (headless costuma
+    recusar), entao aqui verificamos o CONTRATO: o controle existe, e um
+    alvo de toque valido, anuncia estado, e nem o clique nem a tecla F
+    derrubam a pagina.
+  */
+  const problemas = []
+  page.on('pageerror', (e) => problemas.push(e.message))
+
+  await irPara(page, SCENES[0].id)
+  const botao = page.locator('#btn-tela-cheia')
+  await expect(botao).toBeVisible()
+  await expect(botao).toHaveAttribute('aria-pressed', /true|false/)
+  expect(await botao.getAttribute('aria-label')).toBeTruthy()
+
+  const caixa = await botao.boundingBox()
+  expect(caixa.width).toBeGreaterThanOrEqual(88)
+  expect(caixa.height).toBeGreaterThanOrEqual(88)
+
+  await botao.click()
+  await page.keyboard.press('f')
+  await page.waitForTimeout(150)
+
+  // A apresentacao continua respondendo depois de mexer em tela cheia.
+  await page.click('#btn-proxima')
+  await esperarCena(page, SCENES[1])
+  expect(problemas).toEqual([])
+})
+
+test('o cursor some quando ninguem mexe', async ({ page }) => {
+  await irPara(page, SCENES[0].id)
+  await page.mouse.move(900, 500)
+  await expect.poll(
+    () => page.evaluate(() => document.body.dataset.cursor),
+    { timeout: 8000, intervals: [400] }
+  ).toBe('oculto')
+  const estilo = await page.evaluate(() => getComputedStyle(document.body).cursor)
+  expect(estilo).toBe('none')
+})
