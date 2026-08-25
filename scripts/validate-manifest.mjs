@@ -42,6 +42,11 @@ for (const [i, s] of SCENES.entries()) {
       `${onde}: durationMs ${s.durationMs} nao bate com a janela do video ${janelaMs}`)
   }
 
+  // Chip pode trazer icone proprio (card institucional): tem que existir.
+  for (const [j, c] of (s.chips ?? []).entries()) {
+    if (c.icone) check(temIcone(c.icone), `${onde}: chip[${j}] usa icone inexistente "${c.icone}"`)
+  }
+
   if (s.layout === LAYOUTS.SOLUCAO) {
     check(s.pilar !== null, `${onde}: solucao sem pilar`)
     check(Array.isArray(s.chips) && s.chips.length >= 2, `${onde}: solucao precisa de 2+ chips`)

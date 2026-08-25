@@ -3,11 +3,7 @@
   O fundo animado vem do canvas 3D; aqui mora o texto.
 */
 
-.cena {
-  display: grid;
-  min-height: 0;
-  outline: none;
-}
+.cena { display: grid; min-height: 0; outline: none; }
 
 .card {
   position: relative;              /* ancora .moeda dentro do card, nao no #app */
@@ -16,226 +12,369 @@
   height: 100%;
   align-content: center;
   gap: var(--esp-4);
-  opacity: 0;                       /* GSAP anima ate 1 na entrada */
+  opacity: 0;                      /* GSAP anima ate 1 na entrada */
 }
 
-/* ─────────────────────────────────────────── abertura e titulo de pilar */
-.card--abertura,
-.card--titulo-pilar,
-.card--encerramento {
-  align-content: center;
-  justify-items: start;
-  padding-inline: var(--esp-8);
-}
+/* O destaque do titulo e so COR, nunca italico — e assim no video. */
+.card__titulo em { font-style: normal; color: var(--c-lilas); }
+.cena[data-superficie="clara"] .card__titulo em { color: var(--c-roxo-medio); }
 
+/* ───────────────────────────────────────────────────────────── abertura */
+.card--abertura { align-content: center; justify-items: start; padding-inline: var(--esp-8); }
 .card--abertura .card__titulo {
-  font-size: 5.2rem;
-  line-height: 1.05;
-  font-weight: 800;
-  color: var(--c-lime);
-  max-width: 20ch;
-  margin: 0;
+  font-size: 5.2rem; line-height: 1.05; font-weight: 800;
+  color: var(--c-lime); max-width: 20ch; margin: 0;
 }
 .card--abertura .card__subtitulo {
-  font-size: 2.1rem;
-  line-height: 1.4;
-  color: var(--c-branco);
-  max-width: 34ch;
-  margin: 0;
+  font-size: 2.1rem; line-height: 1.4; color: var(--c-branco); max-width: 34ch; margin: 0;
 }
 
-.card--titulo-pilar { justify-items: center; text-align: center; }
-.card--titulo-pilar .card__titulo {
-  font-size: 6rem;
-  font-weight: 800;
-  color: var(--c-branco);
-  margin: 0;
-  text-shadow: 0 0 3rem rgb(0 0 0 / 0.6);
+/* ──────────────────────────────────────────────── card institucional ── */
+/* Fundo verde-limao vem da cena 3D. Aqui: paragrafo no topo, 4 cartoes roxos. */
+.card--institucional {
+  align-content: start;
+  gap: var(--esp-6);
+  padding: var(--esp-2) var(--esp-4) var(--esp-2) 22%;
+  color: var(--c-roxo);
 }
-.card--titulo-pilar .card__subtitulo {
-  font-size: 2.3rem;
-  font-weight: 700;
-  color: var(--c-lime);
-  margin: 0;
+.card--institucional .card__titulo {
+  font-size: 2.3rem; line-height: 1.5; font-weight: 500;
+  color: #163300; margin: 0; max-width: 44ch;
+}
+.card--institucional .card__titulo em {
+  color: #101010; font-weight: 800;   /* no video sao pretos, nao roxos */
+}
+/* o ultimo trecho realcado ganha o retangulo branco do video */
+.card--institucional .card__titulo em:last-of-type {
+  background: var(--c-branco); padding: 0.1em 0.35em;
 }
 
-/* ───────────────────────────────────────────────────── quatro pilares */
+.numeros {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-3); margin: 0; padding: 0; list-style: none; max-width: 62rem;
+}
+.numero {
+  display: flex; align-items: center; gap: var(--esp-2);
+  background: var(--c-roxo-medio); border-radius: var(--raio);
+  padding: var(--esp-2) var(--esp-3);
+  color: var(--c-branco);
+}
+.numero__icone { flex: none; width: 4.2rem; height: 4.2rem; }
+.numero__icone svg { width: 100%; height: 100%; }
+.numero__corpo { display: grid; gap: 0.1rem; }
+.numero__rotulo { font-size: 1.5rem; font-weight: 800; color: var(--c-lime); }
+.numero__destaque { font-size: 3.4rem; font-weight: 800; color: var(--c-lime); line-height: 1; }
+.numero__texto { font-size: 1.25rem; font-weight: 700; line-height: 1.25; text-transform: uppercase; }
+.numero__lista { margin: 0.2rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.15rem; }
+.numero__lista li { font-size: 1.2rem; font-weight: 700; line-height: 1.2; }
+
+/* ────────────────────────────────────────────────────── quatro pilares */
 /*
   No video o "C" da marca ocupa a faixa esquerda e o texto vive na direita.
   Reservar essa faixa e o que impede o titulo de cair por cima do 3D.
 */
 .card--pilares {
-  align-content: center;
-  gap: var(--esp-4);
-  padding-inline-start: 36%;
-  padding-inline-end: var(--esp-4);
+  align-content: center; gap: var(--esp-4);
+  padding-inline-start: 36%; padding-inline-end: var(--esp-4);
 }
 .card--pilares .card__titulo {
-  font-size: 4rem; font-weight: 800; margin: 0; max-width: 24ch;
-  color: var(--c-branco);
+  font-size: 4rem; font-weight: 800; margin: 0; max-width: 24ch; color: var(--c-branco);
 }
-
 .card--pilares .card__subtitulo {
-  font-size: 1.9rem; line-height: 1.5; max-width: 52ch; margin: 0;
-  color: var(--c-branco);
+  font-size: 1.9rem; line-height: 1.5; max-width: 52ch; margin: 0; color: var(--c-branco);
 }
-.pilares { display: flex; gap: var(--esp-6); flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+.pilares { display: flex; gap: var(--esp-4); flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
 .pilares__item { display: grid; justify-items: center; gap: var(--esp-2); text-align: center; }
 .pilares__disco {
-  width: max(7rem, 96px); height: max(7rem, 96px);
-  border-radius: 50%;
-  border: 0.22rem solid var(--c-lime);
-  background: var(--c-roxo-medio);
+  width: max(7rem, 96px); height: max(7rem, 96px); border-radius: 50%;
+  border: 0.22rem solid var(--c-lime); background: var(--c-roxo-medio);
   display: grid; place-items: center;
 }
 .pilares__disco svg { width: 55%; height: 55%; }
-.pilares__nome { font-size: 1.4rem; font-weight: 800; color: var(--c-branco); letter-spacing: 0.04em; }
+/* caixa alta e duas linhas, como no video */
+.pilares__nome { font-size: 1.5rem; font-weight: 800; color: var(--c-branco); letter-spacing: 0.03em; }
 .pilares__nome span { display: block; color: var(--c-lime); }
 
-/* ────────────────────────────────────────────────────── card de solucao */
+/* ─────────────────────────────────────────────────── titulo de pilar ── */
+.card--titulo-pilar {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: center; align-items: center;
+  gap: var(--esp-6); padding-inline: 8%;
+  justify-items: start;
+}
+/*
+  Disco solido e brilhante na cor do pilar, com o icone ocupando ~58% — e o
+  que o video mostra (frames 47s / 137s / 182s). Antes era um vidro escuro
+  igual nos tres pilares, com o icone a 30%: perdia a identidade de cor e a
+  leitura a distancia.
+*/
+.medalhao {
+  width: max(15rem, 200px); height: max(15rem, 200px); border-radius: 50%;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(circle at 32% 24%, rgb(255 255 255 / 0.38), transparent 46%),
+    radial-gradient(circle at 62% 78%, rgb(0 0 0 / 0.42), transparent 60%),
+    var(--acento, #48267D);
+  border: 0.2rem solid rgb(255 255 255 / 0.5);
+  box-shadow: 0 1.4rem 3rem rgb(0 0 0 / 0.5), inset 0 0 3rem rgb(255 255 255 / 0.12);
+}
+.medalhao svg { width: 58%; height: 58%; color: var(--c-branco); }
+.card--titulo-pilar[data-pilar="seguranca-digital"] .medalhao { --acento: #48267D; }
+.card--titulo-pilar[data-pilar="confianca-digital"] .medalhao { --acento: #5C33A0; }
+.card--titulo-pilar[data-pilar="operacoes-inteligentes"] .medalhao { --acento: #8A5FC4; }
+.card--titulo-pilar .card__texto { display: grid; gap: var(--esp-1); }
+.card--titulo-pilar .card__titulo {
+  font-size: 5.4rem; font-weight: 800; color: var(--c-branco); margin: 0;
+  text-shadow: 0 0 3rem rgb(0 0 0 / 0.6); text-align: left;
+}
+.card--titulo-pilar .card__subtitulo {
+  font-size: 2.2rem; font-weight: 700; color: var(--c-lime); margin: 0; text-align: left;
+}
+
+/* ─────────────────────────────────────────────────────── card solucao */
+/*
+  Distribuicao vertical do video: titulo no alto, respiro, chips no meio,
+  barra de aplicacoes abaixo, e o terco inferior livre para a espiral.
+  As faixas fracionarias fazem esse ritmo sem numero magico em pixel.
+*/
+/*
+  As faixas fracionarias sao ESPACADORAS e precisam ficar vazias. Sem colocar
+  cada filho na sua linha, a auto-colocacao do grid enfia os chips na faixa de
+  respiro e eles colam no titulo.
+*/
+.card--solucao > .card__cabecalho { grid-row: 1; }
+.card--solucao > .chips { grid-row: 3; }
+.card--solucao > .aplicacoes { grid-row: 5; }
+
 .card--solucao {
-  align-content: start;
-  gap: var(--esp-3);
-  padding: var(--esp-3) var(--esp-4) var(--esp-3) 15rem;  /* espaco da moeda */
+  grid-template-rows: auto 0.5fr auto 0.3fr auto 1fr;
+  align-content: stretch;
+  gap: 0;
+  padding: var(--esp-2) 3% var(--esp-2) 27%;
   color: var(--c-roxo);
 }
 
 .card__cabecalho { display: flex; align-items: center; gap: var(--esp-3); }
-.card__icone { width: 7rem; height: 7rem; flex: none; color: var(--c-roxo); }
+.card__icone { width: 7.6rem; height: 7.6rem; flex: none; color: var(--c-roxo); }
 .card__icone svg { width: 100%; height: 100%; }
 .card--solucao .card__titulo {
   font-size: 4.4rem; line-height: 1.08; font-weight: 800;
-  color: var(--c-roxo); margin: 0; max-width: 22ch;
+  color: var(--c-roxo); margin: 0;
+  /* largura generosa: o video quebra os titulos em 2 linhas, nao em 3 */
+  max-width: 26ch; hyphens: none;
 }
 
-.chips { display: flex; gap: var(--esp-2); flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+.chips {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
+  gap: var(--esp-2); margin: 0; padding: 0; list-style: none; align-items: stretch;
+}
 .chip {
-  flex: 1 1 0;
-  min-width: 14rem;
   background: var(--c-roxo-medio);
   border: 0.14rem solid var(--c-lime);
   border-radius: var(--raio);
-  padding: var(--esp-2) var(--esp-2);
-  display: grid; gap: 0.25rem; align-content: start;
+  padding: var(--esp-2);
   text-align: center;
+  display: grid; align-content: center; gap: 0.2rem;
 }
-.chip__rotulo { font-size: 1.35rem; font-weight: 700; color: var(--c-branco); }
-.chip__destaque { font-size: 1.9rem; font-weight: 800; color: var(--c-lime); line-height: 1.15; }
-.chip__unidade { font-size: 1.5rem; font-weight: 800; color: var(--c-lime); }
-.chip__texto { font-size: 1.35rem; line-height: 1.35; color: var(--c-branco); }
+.chip__rotulo { font-size: 1.5rem; font-weight: 700; color: var(--c-branco); }
+.chip__destaque { font-size: 2rem; font-weight: 800; color: var(--c-lime); line-height: 1.15; }
+.chip__unidade { font-size: 1.6rem; font-weight: 800; color: var(--c-lime); }
+.chip__texto { font-size: 1.45rem; line-height: 1.3; color: var(--c-branco); }
 
-/* Cards de numero: o destaque cresce e domina o chip. */
-.chip--metrica .chip__destaque { font-size: 3.1rem; }
+/*
+  Chip corrido: uma frase so, com trechos coloridos INLINE.
+  No video "Atendemos 90% das adquirentes" e um paragrafo, nao tres linhas.
+*/
+.chip--corrido { display: block; }
+.chip--corrido > span { display: inline; font-size: 1.6rem; line-height: 1.35; }
+.chip--corrido .chip__destaque { font-weight: 800; }
+.chip--corrido > span + span::before { content: ' '; }
 
+/* Chip de conceito: rotulo verde em linha propria, texto branco embaixo. */
+.chip--conceito .chip__destaque { display: block; font-size: 1.9rem; }
+.chip--conceito .chip__texto { display: block; font-size: 1.5rem; }
+
+/* Chip de metrica: numero-heroi empilhado, como nos cards de numero. */
+.chip--metrica .chip__destaque { font-size: 3.4rem; line-height: 1; }
+.chip--metrica .chip__unidade { display: block; }
+
+/* A pilula lime abraca o texto — no video ela nao atravessa a tela inteira. */
 .aplicacoes {
-  background: var(--c-lime);
-  color: var(--c-roxo);
+  justify-self: start;
+  max-width: 100%;
+  background: var(--c-lime); color: var(--c-roxo);
   border-radius: var(--raio-pilula);
   padding: var(--esp-2) var(--esp-3);
-  font-size: 1.45rem; font-weight: 700; line-height: 1.4;
-  margin: 0;
+  font-size: 1.5rem; font-weight: 700; line-height: 1.4; margin: 0;
 }
 .aplicacoes b { font-weight: 800; }
 
-/* Moeda do pilar + aneis concentricos, canto inferior esquerdo (como no video) */
+/* Moeda do pilar + placa, canto inferior esquerdo (como no video) */
 .moeda {
-  position: absolute;
-  left: 0.5rem; bottom: 0.5rem;
-  width: 13rem;
-  display: grid; justify-items: center; gap: var(--esp-1);
+  position: absolute; left: 0; bottom: 6%;
+  width: 20rem; display: grid; justify-items: center; gap: var(--esp-1);
   pointer-events: none;
 }
 .moeda__disco {
-  width: 7.4rem; height: 7.4rem; border-radius: 50%;
+  width: max(11rem, 150px); height: max(11rem, 150px); border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #5A3A93, #1B0F2E 70%);
   border: 0.18rem solid rgb(255 255 255 / 0.28);
   display: grid; place-items: center;
   box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.35);
 }
 .moeda__disco svg { width: 52%; height: 52%; color: #fff; }
+/* A placa e tingida por pilar, como no video — nao e sempre preta. */
 .moeda__etiqueta {
-  background: var(--c-quase-carvao);
-  color: var(--c-branco);
-  font-size: 1.15rem; font-weight: 800; letter-spacing: 0.06em;
-  padding: 0.5rem 1rem; border-radius: 0.5rem; white-space: nowrap;
-  text-transform: uppercase;
+  background: rgb(29 12 56 / 0.92);   /* roxo escuro, como no video */ color: var(--c-branco);
+  font-size: 1.25rem; font-weight: 800; letter-spacing: 0.05em;
+  padding: 0.5rem 1rem; border-radius: 0.5rem; white-space: nowrap; text-transform: uppercase;
 }
-
+.moeda[data-pilar="confianca-digital"] .moeda__etiqueta { background: #2D0951; }
+.moeda[data-pilar="operacoes-inteligentes"] .moeda__etiqueta { background: #8A5FC4; color: #1B0F2E; }
 
 /* ──────────────────────────────────────────────────────────── mandala */
+/*
+  A roda ocupa a altura inteira do palco. A dica de uso mora DENTRO da coluna
+  central, embaixo da roda, onde sobra espaco — antes ela era uma faixa
+  propria do grid e roubava ~37px das colunas de pilulas, que entao
+  transbordavam 11px para cima e escreviam por cima do cabecalho.
+*/
 .card--mandala {
-  align-content: center;
-  justify-items: stretch;
-  gap: var(--esp-2);
-  grid-template-rows: auto auto minmax(0, 1fr);
-  overflow: hidden;                /* nada escapa por cima do titulo */
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch; gap: 0; overflow: hidden;
 }
-.card--mandala .card__titulo { font-size: 2.4rem; font-weight: 800; color: var(--c-roxo); margin: 0; text-align: center; }
-.card--mandala .card__subtitulo { font-size: 1.4rem; color: var(--c-roxo-medio); margin: 0; text-align: center; }
-
 .mandala {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: var(--esp-2);
-  align-items: center;
-  min-height: 0;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: var(--esp-2); align-items: stretch; min-height: 0;
 }
 /*
-  Cada lado tem 9 solucoes. Em UMA coluna nao cabem 9 alvos de 88px na altura
-  util da TV — por isso cada lado e um grid de 2 colunas x 5 linhas. O alvo
-  continua com o piso de 88px; o que muda e a largura, nao a area tocavel.
+  Colocacao explicita: o rodape vem depois no DOM (ordem de Tab) mas aparece
+  embaixo da roda. Por CLASSE, nao por :nth-of-type — o tipo aqui e "div"
+  para os quatro filhos, entao nth-of-type(2) pegava a RODA em vez da coluna
+  direita, e a coluna direita ficava com area automatica (mais curta).
 */
+.mandala__coluna--esq { grid-area: 1 / 1 / 3 / 2; }
+.mandala__roda { grid-area: 1 / 2 / 2 / 3; }
+.mandala__coluna--dir { grid-area: 1 / 3 / 3 / 4; }
+.mandala__rodape { grid-area: 2 / 2 / 3 / 3; }
 .mandala__coluna {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-auto-rows: minmax(var(--toque), auto);
-  gap: 0.5rem;
-  align-content: center;
-  min-height: 0;
+  display: grid; grid-template-rows: repeat(8, minmax(0, 1fr));
+  gap: 0.4rem; align-content: stretch; min-height: 0; overflow: hidden;
 }
-.mandala__centro { display: grid; place-items: center; }
+
+.mandala__roda { position: relative; display: grid; place-items: center; align-content: center; gap: var(--esp-1); }
+.roda { width: min(34rem, 46vh); height: auto; display: block; }
+.roda__setor { cursor: pointer; }
+.roda__setor:hover path, .roda__setor:focus-visible path { filter: brightness(1.15); }
+.roda__icone { color: var(--c-branco); }
+.roda__rotulo { font-size: 2.3px; font-weight: 800; fill: var(--c-branco); letter-spacing: 0.04px; }
+.roda__anel-texto text { font-size: 5.4px; font-weight: 800; fill: var(--c-roxo); letter-spacing: 0.35px; }
+
+/* nucleo verde: o titulo da cena mora dentro dele, como no video */
+/*
+  Confinado ao circulo verde (r=15,5 de 50 => 31% do lado). Com inset:0 o
+  texto usava a largura inteira do SVG e vazava para fora do nucleo.
+*/
 .mandala__nucleo {
-  width: 13rem; height: 13rem; border-radius: 50%;
-  background: var(--c-lime);
-  display: grid; place-items: center; text-align: center;
-  font-size: 1rem; font-weight: 800; color: var(--c-roxo);
-  line-height: 1.25; padding: var(--esp-2);
+  position: absolute; left: 50%; top: 50%; width: 29%; height: 29%;
+  transform: translate(-50%, -50%);
+  display: grid; place-content: center; align-content: center;
+  text-align: center; pointer-events: none;
 }
-.mandala__nucleo strong { font-size: 1.6rem; }
+.mandala__nucleo .card__titulo {
+  font-size: 0.85rem; font-weight: 800; color: var(--c-roxo);
+  line-height: 1.15; margin: 0; text-transform: uppercase;
+}
+
+
+.mandala__rodape { display: flex; gap: 0.4rem; justify-content: center; align-items: end; }
+.mandala__dica { margin: 0; text-align: center; font-size: 1.25rem; color: var(--c-roxo-medio); max-width: 26ch; }
 
 .mandala__item {
-  display: flex; align-items: center; gap: 0.5rem;
-  min-height: var(--toque);
-  padding: 0.5rem 0.7rem;
+  display: flex; align-items: center; gap: 0.6rem;
+  min-height: var(--toque); min-width: var(--toque);
+  padding: 0.5rem 0.8rem;
   border: 0; border-radius: 0.6rem;
-  background: var(--c-roxo-medio);
-  color: var(--c-branco);
-  font-size: 1.05rem; font-weight: 600; line-height: 1.2;
+  background: var(--c-roxo-medio); color: var(--c-branco);
+  font-size: 1.15rem; font-weight: 600; line-height: 1.2;
   text-align: left; cursor: pointer;
   box-shadow: 0 0.3rem 0.6rem rgb(0 0 0 / 0.22);
 }
-.mandala__item svg { width: 1.7rem; height: 1.7rem; flex: none; }
+.mandala__item b { font-weight: 800; }
+.mandala__item svg { width: 1.8rem; height: 1.8rem; flex: none; }
 .mandala__item[data-pilar="confianca-digital"] { background: #5C33A0; }
 .mandala__item[data-pilar="operacoes-inteligentes"] { background: #8A5FC4; }
 
 /* ──────────────────────────────────────────────────────────────── CTA */
-.card--cta { align-content: center; justify-items: center; text-align: center; gap: var(--esp-3); }
-.card--cta .card__titulo { font-size: 4.2rem; font-weight: 800; color: var(--c-roxo); margin: 0; }
+/* No video o QR fica a ESQUERDA e o texto a direita, alinhado a esquerda. */
+.card--cta {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: center; align-items: center;
+  gap: var(--esp-8); padding-inline: 6%;
+}
+.qr {
+  width: min(34rem, 52vh); aspect-ratio: 1;
+  background: #fff; border: 0.4rem solid var(--c-lime);
+  border-radius: 1.6rem; padding: var(--esp-2);
+}
+.qr svg { width: 100%; height: 100%; display: block; }
+.card--cta .card__texto { display: grid; gap: var(--esp-2); justify-items: start; }
+.cta__marca { display: flex; align-items: center; gap: var(--esp-2); width: 100%; }
 
-.card--cta .card__subtitulo { font-size: 1.7rem; color: var(--c-roxo-medio); max-width: 46ch; margin: 0; }
-.qr { width: 18rem; height: 18rem; background: #fff; border: 0.4rem solid var(--c-lime); border-radius: var(--raio); padding: var(--esp-1); }
-.qr svg { width: 100%; height: 100%; }
+.cta__filete { flex: 1 1 auto; height: 0.12rem; background: var(--c-lilas); }
+.card--cta .card__titulo {
+  font-size: 4.2rem; font-weight: 800; color: #1A1A1A; margin: 0; text-align: left; max-width: 21ch;
+}
+.card--cta .card__titulo em { color: var(--c-roxo-medio); }
+.card--cta .card__subtitulo {
+  font-size: 1.8rem; line-height: 1.45; color: #4A4458; max-width: 40ch; margin: 0; text-align: left;
+}
+.card--cta .card__subtitulo em { font-style: normal; color: var(--c-roxo-medio); font-weight: 800; }
 
-/* ─────────────────────────────────────────────────────── encerramento */
-.card--encerramento { justify-items: center; text-align: center; }
-.card--encerramento .card__titulo { font-size: 4rem; color: var(--c-branco); margin: 0; }
+/* ───────────────────────────────────────────────────────── encerramento */
+.card--encerramento { align-content: center; justify-items: center; gap: var(--esp-3); }
 
-/* superficie clara para os layouts que no video sao sobre branco */
+.card--encerramento .card__titulo { margin: 0; }
+.selo50 { display: flex; align-items: flex-end; gap: 0.6rem; line-height: 1; }
+.selo50__numero {
+  font-size: 13rem; font-weight: 800; line-height: 0.9;
+  background: linear-gradient(160deg, #F0D98A 0%, #C9A227 45%, #8C6A12 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.selo50__anos {
+  font-size: 2.6rem; font-weight: 400; letter-spacing: 0.42em;
+  color: var(--c-branco); padding-bottom: 2.6rem;
+}
+
 .cena[data-superficie="clara"] { color: var(--c-roxo); }
 
+/* ── marca CPQD nos demais pontos (variantes medidas no video) ───────── */
+/* CTA: marca escura sobre o card claro — quadro 249s */
+.cta__marca .marca__cpqd {
+  background-image: url("../assets/cpqd-marca-positiva.svg");
+  width: 14.4rem;
+}
 /*
-  O destaque do titulo e so COR, nunca italico — e assim no video.
-  A cor sai do contexto: lilas no escuro, roxo medio no claro.
+  Nucleo da mandala, disco lime: no frame de 36s a marca e TODA PRETA — nem
+  o laco colorido, nem o laco vazado em branco. brightness(0) achata
+  qualquer variante para preto solido.
 */
-.card__titulo em { font-style: normal; color: var(--c-lilas); }
-.cena[data-superficie="clara"] .card__titulo em { color: var(--c-roxo-medio); }
+.mandala__marca {
+  display: block; width: 8.4rem; aspect-ratio: 1000 / 363;
+  background: url("../assets/cpqd-marca-positiva.svg") center / contain no-repeat;
+  filter: brightness(0);
+  font-size: 0; line-height: 0; color: transparent; overflow: hidden;
+  margin-top: 0.3rem;
+}
+/* Selo de encerramento, sobre roxo escuro — quadro 254,5s */
+.selo50__marca {
+  display: block; width: 26rem; aspect-ratio: 1000 / 363;
+  background: url("../assets/cpqd-marca-negativa.svg") center / contain no-repeat;
+  font-size: 0; line-height: 0; color: transparent; overflow: hidden;
+}
+.mandala__disco { position: relative; display: grid; place-items: center; }
+
+/* Cada linha do titulo e um bloco (ver comQuebras em ui/scene-view.js). */
+.card__titulo .linha { display: block; }

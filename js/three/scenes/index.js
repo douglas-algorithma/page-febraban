@@ -15,6 +15,7 @@ import aberturaPilar from './abertura-pilar.js'
 import orbitaPilares from './orbita-pilares.js'
 import ondasBarras from './ondas-barras.js'
 import seloFinal from './selo-final.js'
+import campoLime from './campo-lime.js'
 
 export const REGISTRY = {
   'aneis-card': aneisCard,
@@ -23,7 +24,8 @@ export const REGISTRY = {
   'abertura-pilar': aberturaPilar,
   'orbita-pilares': orbitaPilares,
   'ondas-barras': ondasBarras,
-  'selo-final': seloFinal
+  'selo-final': seloFinal,
+  'campo-lime': campoLime
 }
 
 export const idsRegistrados = () => Object.keys(REGISTRY)

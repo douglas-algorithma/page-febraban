@@ -37,6 +37,7 @@ export const VIDEO_SOURCE = {
 /** Layouts de card observados no video. */
 export const LAYOUTS = {
   ABERTURA: 'abertura',
+  INSTITUCIONAL: 'institucional',
   PILARES: 'pilares',
   MANDALA: 'mandala',
   TITULO_PILAR: 'titulo-pilar',
@@ -54,8 +55,32 @@ export const SCENES = [
     titulo: 'Soluções Inteligentes para o setor Financeiro',
     subtitulo: 'Tecnologias para proteger operações, simplificar jornadas e acelerar a inovação',
     scene3d: 'campo-particulas',
-    durationMs: 14500,
-    fonte: { tIn: 0.0, tOut: 14.5 }
+    durationMs: 9700,
+    fonte: { tIn: 0.0, tOut: 9.7 }
+  },
+  {
+    /*
+      Card institucional de fundo verde-limao — o unico da peca inteira.
+      Ficou de fora da primeira leitura do ritmo porque a energia de mudanca
+      nao cai entre a abertura e ele (a transicao e uma cortina animada, sem
+      quadro em repouso no meio). Achado comparando frame a frame: a cor media
+      do quadro vira verde entre 9,7s e 15,5s.
+      Traz os unicos numeros institucionais da peca.
+    */
+    id: 'cpqd-em-numeros',
+    layout: LAYOUTS.INSTITUCIONAL,
+    pilar: null,
+    titulo: 'O CPQD transforma desafios em soluções que conectam tecnologia, inovação e negócios, construindo uma trajetória marcada por grandes resultados.',
+    tituloDestaque: ['CPQD', 'tecnologia, inovação e negócios', 'grandes resultados.'],
+    chips: [
+      { destaque: '+750', texto: 'CLIENTES ATENDIDOS POR NOSSAS SOLUÇÕES', icone: 'rede' },
+      { destaque: '+2 MIL', texto: 'SOFTWARES REGISTRADOS E PROTEGIDOS', icone: 'software' },
+      { texto: 'ATUAÇÃO NA AMÉRICA LATINA E EUROPA', icone: 'globo' },
+      { rotulo: 'LINHAS DE NEGÓCIOS', lista: ['PRODUTOS E SERVIÇOS', 'PD&I', 'ENSAIOS E CERTIFICAÇÕES'], icone: 'mao-engrenagem' }
+    ],
+    scene3d: 'campo-lime',
+    durationMs: 5800,
+    fonte: { tIn: 9.7, tOut: 15.5 }
   },
   {
     id: 'quatro-pilares',
@@ -65,14 +90,14 @@ export const SCENES = [
     tituloDestaque: 'ecossistema financeiro',
     subtitulo: 'Sua atuação se apoia em quatro pilares, ampliando a eficiência e preparando instituições para os desafios do futuro, além de gerar valor para toda a jornada do negócio.',
     scene3d: 'orbita-pilares',
-    durationMs: 6900,
-    fonte: { tIn: 14.5, tOut: 21.4 }
+    durationMs: 5900,
+    fonte: { tIn: 15.5, tOut: 21.4 }
   },
   {
     id: 'mandala-abertura',
     layout: LAYOUTS.MANDALA,
     pilar: null,
-    titulo: 'Ecossistema de Soluções CPQD',
+    titulo: 'Ecossistema de Soluções',
     subtitulo: 'Toque em uma solução para explorar',
     scene3d: 'roda-mandala',
     durationMs: 21300,
@@ -92,6 +117,8 @@ export const SCENES = [
   },
   {
     id: 'teste-avaliacao-agentes-ia',
+    coluna: 'esq',
+    rotuloCurto: 'Teste e Avaliação de Agentes de IA',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
     titulo: 'Teste e Avaliação de Agentes de IA',
@@ -108,6 +135,8 @@ export const SCENES = [
   },
   {
     id: 'pentests-agentes-ia',
+    coluna: 'esq',
+    rotuloCurto: '**Pentests** de Agentes de IA',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
     titulo: 'Pentests de Agentes de IA',
@@ -124,6 +153,8 @@ export const SCENES = [
   },
   {
     id: 'escalabilidade-ia',
+    coluna: 'esq',
+    rotuloCurto: 'Escalabilidade de IA com Segurança e Privacidade',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
     titulo: 'Escalabilidade de IA com Segurança e Privacidade',
@@ -140,6 +171,8 @@ export const SCENES = [
   },
   {
     id: 'ciberseguranca-resposta-incidentes',
+    coluna: 'esq',
+    rotuloCurto: 'Cibersegurança e Resposta a Incidentes',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
     titulo: 'Cibersegurança e Resposta a Incidentes',
@@ -156,6 +189,8 @@ export const SCENES = [
   },
   {
     id: 'credenciais-verificaveis',
+    coluna: 'dir',
+    rotuloCurto: 'Credenciais Verificáveis',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
     titulo: 'Credenciais Verificáveis',
@@ -172,6 +207,8 @@ export const SCENES = [
   },
   {
     id: 'ensaios-pos',
+    coluna: 'dir',
+    rotuloCurto: 'Ensaios para POS',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
     titulo: 'Ensaios para POS e Meios de Pagamento',
@@ -188,6 +225,8 @@ export const SCENES = [
   },
   {
     id: 'antifraude',
+    coluna: 'dir',
+    rotuloCurto: '**Antifraude:** Transacional, Pix e Adquirente',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
     titulo: 'Soluções Antifraude Transacional, Pix e Adquirente',
@@ -206,6 +245,8 @@ export const SCENES = [
   },
   {
     id: 'monitoramento-pld-ft',
+    coluna: 'dir',
+    rotuloCurto: '**PLD/FT –** Prevenção à Lavagem de Dinheiro',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
     titulo: 'Monitoramento PLD/FT',
@@ -222,6 +263,8 @@ export const SCENES = [
   },
   {
     id: 'criptografia-pos-quantica',
+    coluna: 'dir',
+    rotuloCurto: 'Criptografia Pós-Quântica',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'seguranca-digital',
     titulo: 'Criptografia Pós-Quântica',
@@ -240,7 +283,7 @@ export const SCENES = [
     id: 'mandala-recap-1',
     layout: LAYOUTS.MANDALA,
     pilar: null,
-    titulo: 'Ecossistema de Soluções CPQD',
+    titulo: 'Ecossistema de Soluções',
     subtitulo: 'Segurança Digital concluída — toque para explorar ou siga',
     scene3d: 'roda-mandala',
     durationMs: 13000,
@@ -260,6 +303,8 @@ export const SCENES = [
   },
   {
     id: 'identidade-digital',
+    coluna: 'esq',
+    rotuloCurto: 'Identidade Digital',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'confianca-digital',
     titulo: 'Identidade Digital',
@@ -277,6 +322,8 @@ export const SCENES = [
   },
   {
     id: 'onboarding',
+    coluna: 'esq',
+    rotuloCurto: 'Onboarding',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'confianca-digital',
     titulo: 'Onboarding',
@@ -294,6 +341,8 @@ export const SCENES = [
   },
   {
     id: 'solucoes-voz-ia',
+    coluna: 'esq',
+    rotuloCurto: 'Soluções de Voz com IA',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'confianca-digital',
     titulo: 'Soluções de Voz com IA',
@@ -312,7 +361,7 @@ export const SCENES = [
     id: 'mandala-recap-2',
     layout: LAYOUTS.MANDALA,
     pilar: null,
-    titulo: 'Ecossistema de Soluções CPQD',
+    titulo: 'Ecossistema de Soluções',
     subtitulo: 'Confiança Digital concluída — toque para explorar ou siga',
     scene3d: 'roda-mandala',
     durationMs: 12500,
@@ -332,6 +381,8 @@ export const SCENES = [
   },
   {
     id: 'higienizacao-dados-cadastrais',
+    coluna: 'dir',
+    rotuloCurto: 'Higienização de Dados Cadastrais',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
     titulo: 'Higienização de Dados Cadastrais',
@@ -339,7 +390,7 @@ export const SCENES = [
     metrica: true,
     chips: [
       { destaque: '+100 mil', unidade: 'dados cadastrais', texto: 'normalizados' },
-      { rotulo: 'Incremento de', destaque: '50%', texto: 'na qualidade do dado consultado' }
+      { destaque: 'Incremento de 50%', texto: 'na qualidade do dado consultado' }
     ],
     aplicacoes: ['Cadastro', 'Onboarding de Clientes', 'Prevenção a Fraudes', 'Qualidade de Dados'],
     scene3d: 'aneis-card',
@@ -348,6 +399,8 @@ export const SCENES = [
   },
   {
     id: 'ia-aplicada-negocio',
+    coluna: 'dir',
+    rotuloCurto: 'IA Aplicada ao Negócio',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
     titulo: 'IA Aplicada ao Negócio',
@@ -364,9 +417,11 @@ export const SCENES = [
   },
   {
     id: 'data-center-gerencia-planta',
+    coluna: 'esq',
+    rotuloCurto: '**Data Center –** Gerência da Planta',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
-    titulo: 'Data Center — Gerência da Planta',
+    titulo: 'Data Center\nGerência da Planta',
     icone: 'rack',
     chips: [
       { rotulo: 'Gestão de ativos em operadoras', destaque: 'nacionais e internacionais' },
@@ -380,13 +435,15 @@ export const SCENES = [
   },
   {
     id: 'data-center-monitoramento',
+    coluna: 'base',
+    rotuloCurto: '**Data Center –** Monitoramento Inteligente',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
-    titulo: 'Data Center — Monitoramento Inteligente',
+    titulo: 'Data Center\nMonitoramento Inteligente',
     icone: 'rack',
     metrica: true,
     chips: [
-      { destaque: '22', texto: 'datacenters e 62 Availability Zones' },
+      { destaque: '22', texto: 'datacenters e', destaque2: '62', texto2: 'Availability Zones' },
       { destaque: '+1.600', texto: 'servidores monitorados' },
       { destaque: '+21 milhões', texto: 'de registros operacionais' },
       { destaque: '+150 mil', texto: 'análises executadas por IA' }
@@ -398,12 +455,14 @@ export const SCENES = [
   },
   {
     id: 'gestao-inteligente-pos',
+    coluna: 'base',
+    rotuloCurto: 'Gestão Inteligente de POS',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
     titulo: 'Gestão Inteligente de POS',
     icone: 'grafico',
     chips: [
-      { destaque: 'De 30% a 40%', texto: 'Menos custos logísticos' },
+      { rotulo: 'De', destaque: '30%', texto: 'a', destaque2: '40%', texto2: 'Menos custos logísticos' },
       { destaque: '+5% a 10%', texto: 'Potencial de aumento no TPV (Volume Total de Pagamentos)' },
       { destaque: 'Até 50%', texto: 'Redução no tempo de reparo' }
     ],
@@ -414,6 +473,8 @@ export const SCENES = [
   },
   {
     id: 'gestao-inadimplencia',
+    coluna: 'dir',
+    rotuloCurto: 'Gestão de Inadimplência',
     layout: LAYOUTS.SOLUCAO,
     pilar: 'operacoes-inteligentes',
     titulo: 'Gestão de Inadimplência',
@@ -434,7 +495,7 @@ export const SCENES = [
     id: 'mandala-final',
     layout: LAYOUTS.MANDALA,
     pilar: null,
-    titulo: 'Ecossistema de Soluções CPQD',
+    titulo: 'Ecossistema de Soluções',
     subtitulo: 'Toque em qualquer solução para revisitar',
     scene3d: 'roda-mandala',
     durationMs: 14000,
@@ -447,6 +508,7 @@ export const SCENES = [
     titulo: 'Fale com os nossos Especialistas!',
     tituloDestaque: 'Especialistas!',
     subtitulo: 'Escaneie o QR Code e converse com um de nossos especialistas para conhecer as melhores soluções para o seu negócio.',
+    subtituloDestaque: 'melhores soluções para o seu negócio.',
     scene3d: 'ondas-barras',
     durationMs: 6000,
     fonte: { tIn: 245.5, tOut: 251.5 }
@@ -470,11 +532,30 @@ export const sceneCount = () => SCENES.length
 export const sceneAt = (i) => SCENES[clampIndex(i)]
 export const sceneById = (id) => SCENES.find((s) => s.id === id) ?? null
 export const indexOfScene = (id) => SCENES.findIndex((s) => s.id === id)
-export const clampIndex = (i) => Math.min(Math.max(i, 0), SCENES.length - 1)
+/**
+ * Grampeia o indice. Trata nao-finito: `ir(NaN)` gravava NaN no estado, a
+ * primeira view lancava e a excecao interrompia o laco de notificacao,
+ * deixando HUD, menu, rota e palco dessincronizados PARA SEMPRE.
+ */
+export const clampIndex = (i) =>
+  (Number.isFinite(i) ? Math.min(Math.max(Math.trunc(i), 0), SCENES.length - 1) : 0)
 
 /** Duracao total, em ms — sempre igual ao video. */
 export const totalDurationMs = () =>
   SCENES.reduce((soma, s) => soma + s.durationMs, 0)
+
+/**
+ * Rotulo da pilula na mandala. No video a roda usa nomes mais curtos que os
+ * titulos dos cards ("Ensaios para POS" e nao "Ensaios para POS e Meios de
+ * Pagamento"), alguns com negrito parcial marcado por **asteriscos**.
+ */
+export const rotuloMandala = (cena) => cena.rotuloCurto ?? cena.titulo
+
+/**
+ * Onde cada solucao fica na roda. A disposicao e a do video (8 a esquerda,
+ * 8 a direita, o resto embaixo) — nao e ordem de leitura, e equilibrio visual.
+ */
+export const solucoesDaColuna = (col) => solutions().filter((s) => s.coluna === col)
 
 /** Somente as solucoes: alimenta a mandala e o menu. */
 export const solutions = () =>

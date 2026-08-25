@@ -75,41 +75,43 @@ for (const arquivo of arquivosDeCena) {
 test('percorrer todas as cenas nao deixa geometria viva na GPU', async ({ page }) => {
   await irPara(page, SCENES[0].id)
 
+  const ids = SCENES.map((s) => s.id)
+
   /*
-    Medir renderer.info exige estado deterministico: a contagem sobe no UPLOAD
-    (primeiro render) e desce no dispose. Trocar 29 cenas em rajada, sem deixar
-    render acontecer, le um numero que depende de quantos quadros couberam no
-    meio — foi o que tornou este teste flaky sob carga paralela.
-    Entao sempre medimos na MESMA cena e depois de dois quadros garantidos.
+    O laco inteiro roda DENTRO da pagina, numa chamada so. Antes eram ~90
+    idas e voltas ao browser e o teste estourava o tempo sob carga paralela —
+    o que parecia vazamento era so lentidao de ida e volta.
+
+    Medimos sempre na MESMA cena e forcamos o render: a contagem do three so
+    sobe no UPLOAD, entao esperar por requestAnimationFrame tornava o numero
+    dependente de quantos quadros couberam no meio.
   */
-  const medir = async () => {
-    await page.evaluate((id) => globalThis.__cpqd.store.irPara(id, 'teste'), SCENES[0].id)
-    await page.waitForSelector('#app[data-scene-settled="true"]')
-    await page.evaluate(() => new Promise((r) =>
-      requestAnimationFrame(() => requestAnimationFrame(r))))
-    return page.evaluate(() => {
-      const m = globalThis.__cpqd.stage.info.memory
+  const { linhaBase, depois, contextoPerdido } = await page.evaluate((ids) => {
+    const { store, stage } = globalThis.__cpqd
+
+    const medir = () => {
+      store.irPara(ids[0], 'teste')
+      stage.atualizar(16)
+      const m = stage.info.memory
       return { geometrias: m.geometries, texturas: m.textures }
-    })
-  }
-
-  const umaVolta = async () => {
-    for (const cena of SCENES) {
-      await page.evaluate((id) => globalThis.__cpqd.store.irPara(id, 'teste'), cena.id)
-      await page.evaluate(() => new Promise((r) => requestAnimationFrame(r)))
     }
-  }
+    const umaVolta = () => {
+      for (const id of ids) { store.irPara(id, 'teste'); stage.atualizar(16) }
+    }
 
-  // Volta de aquecimento antes de medir: o three aloca por conta propria na
-  // primeira renderizacao de MeshStandardMaterial (a LUT de BRDF, uma textura
-  // do renderer que nunca e liberada). Contar isso seria medir errado.
-  await umaVolta()
-  const linhaBase = await medir()
+    // Volta de aquecimento antes de medir: o three aloca por conta propria na
+    // primeira renderizacao de MeshStandardMaterial (a LUT de BRDF, uma
+    // textura do renderer que nunca e liberada).
+    umaVolta()
+    const linhaBase = medir()
+    umaVolta()
+    umaVolta()
+    const depois = medir()
 
-  await umaVolta()
-  await umaVolta()
-  const depois = await medir()
+    return { linhaBase, depois, contextoPerdido: Boolean(stage.info.render.frame === 0) }
+  }, ids)
 
+  expect(contextoPerdido, 'o contexto WebGL caiu — medicao invalida').toBe(false)
   expect(depois.geometrias,
     `geometrias: ${linhaBase.geometrias} -> ${depois.geometrias} apos 2 voltas completas`)
     .toBeLessThanOrEqual(linhaBase.geometrias)

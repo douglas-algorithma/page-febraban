@@ -1,11 +1,18 @@
 .menu {
   position: absolute;
-  inset: var(--safe);
+  /*
+    Deixa a faixa de controles livre. Com inset:var(--safe) o painel cobria
+    exatamente a area do HUD de baixo, entao o proprio #btn-menu (que tem
+    aria-expanded, ou seja, promete alternar) ficava sob o overlay e nao
+    fechava o menu.
+  */
+  top: var(--safe); left: var(--safe); right: var(--safe);
+  bottom: calc(var(--safe) + var(--toque) + var(--esp-3));
   z-index: 5;
   background: rgb(23 12 38 / 0.97);
   border: 0.14rem solid var(--c-roxo-medio);
   border-radius: var(--raio);
-  padding: var(--esp-4);
+  padding: var(--esp-3) var(--esp-4);
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   gap: var(--esp-3);
@@ -16,25 +23,25 @@
 .menu__cabecalho { display: flex; align-items: center; justify-content: space-between; gap: var(--esp-3); }
 .menu__titulo { margin: 0; font-size: 2.6rem; font-weight: 800; color: var(--c-lime); }
 
-.menu__corpo { overflow-y: auto; display: grid; gap: var(--esp-4); align-content: start; }
+.menu__corpo { overflow-y: auto; display: grid; gap: var(--esp-3); align-content: start; }
 
 .menu__grupo { display: grid; gap: var(--esp-2); }
 .menu__grupo-titulo {
   margin: 0; font-size: 1.5rem; font-weight: 800; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--c-lilas);
 }
-.menu__lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); gap: var(--esp-2); margin: 0; padding: 0; list-style: none; }
+.menu__lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
 
 .menu__item {
   width: 100%;
   min-height: var(--toque);
   display: flex; align-items: center; gap: var(--esp-2);
-  padding: var(--esp-2);
+  padding: 0.5rem 0.8rem;
   border: 0.14rem solid var(--c-roxo-medio);
   border-radius: var(--raio);
   background: rgb(72 38 125 / 0.4);
   color: var(--c-branco);
-  font: inherit; font-size: 1.4rem; font-weight: 600; text-align: left;
+  font: inherit; font-size: 1.2rem; font-weight: 600; text-align: left;
   cursor: pointer; touch-action: manipulation;
 }
 .menu__item[aria-current="true"] { border-color: var(--c-lime); background: rgb(182 240 0 / 0.16); }

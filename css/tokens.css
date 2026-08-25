@@ -31,6 +31,13 @@
   --dur-media: 520ms;
   --dur-entrada: 720ms;
 
+  /*
+    Poppins vendorizada em assets/fonts (ver css/fonts.css). O video usa uma
+    geometrica de 'a' de UM andar; a pilha de sistema cai em Helvetica, que
+    tem 'a' de dois andares — diferenca visivel em qualquer texto da tela.
+  */
+  --fonte: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+
   /* cor de espera — substituida por brand.js */
   --c-roxo-noite: #20112C;
 }

@@ -30,14 +30,14 @@ conectarRouter(store)
 conectarInput(store)
 
 // Troca a cena 3D junto com o card, usando o `scene3d` do manifesto.
-store.subscribe((s, motivo) => {
-  if (motivo === 'tocar' || motivo === 'pausar' || motivo === 'menu') return
-  const pilar = s.cena.pilar ? PILLARS[s.cena.pilar] : null
-  if (stage.idAtual !== s.cena.scene3d || motivo === 'inicial') {
-    stage.montar(s.cena.scene3d, pilar)
-  } else {
-    stage.montar(s.cena.scene3d, pilar)  // remonta: o acento do pilar muda
-  }
+// Remonta quando muda o visual OU o pilar (o acento vem do pilar), e nao a
+// cada navegacao — antes os dois bracos do if eram identicos.
+let montado = null
+store.subscribe((s) => {
+  const chave = `${s.cena.scene3d}|${s.cena.pilar ?? ''}`
+  if (chave === montado) return
+  montado = chave
+  stage.montar(s.cena.scene3d, s.cena.pilar ? PILLARS[s.cena.pilar] : null)
 })
 
 function ajustar () {

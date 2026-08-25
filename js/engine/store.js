@@ -16,6 +16,14 @@ export function createStore (indiceInicial = 0) {
     decorridoMs: 0
   }
 
+  /*
+    Carencia depois de um toque do visitante. Sem isso o totem volta a avancar
+    sozinho no tempo normal da cena (~7s) logo depois de alguem escolher o que
+    quer ver. Motivos automaticos ('auto') nao ganham carencia.
+  */
+  const CARENCIA_MS = 15000
+  const MANUAL = new Set(['botao', 'teclado', 'swipe', 'menu', 'mandala', 'roda', 'rota'])
+
   const inscritos = new Set()
   let ultimoMotivo = 'inicial'
 
@@ -35,7 +43,7 @@ export function createStore (indiceInicial = 0) {
     const alvo = clampIndex(indice)
     if (alvo === estado.indice && motivo !== 'inicial') return
     estado.indice = alvo
-    estado.decorridoMs = 0
+    estado.decorridoMs = MANUAL.has(motivo) ? -CARENCIA_MS : 0
     notificar(motivo)
   }
 
@@ -67,8 +75,8 @@ export function createStore (indiceInicial = 0) {
     pausar () { if (estado.tocando) { estado.tocando = false; notificar('pausar') } },
     alternarReproducao () { estado.tocando ? this.pausar() : this.tocar() },
 
-    abrirMenu () { if (!estado.menuAberto) { estado.menuAberto = true; notificar('menu') } },
-    fecharMenu () { if (estado.menuAberto) { estado.menuAberto = false; notificar('menu') } },
+    abrirMenu () { if (!estado.menuAberto) { estado.menuAberto = true; notificar('menu-toggle') } },
+    fecharMenu () { if (estado.menuAberto) { estado.menuAberto = false; notificar('menu-toggle') } },
     alternarMenu () { estado.menuAberto ? this.fecharMenu() : this.abrirMenu() },
 
     /** Chamado pelo relogio a cada quadro. Nao notifica: seria 60x/s. */

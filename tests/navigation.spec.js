@@ -1,44 +1,38 @@
 /** Fluxos de navegacao: botoes, teclado, toque, menu, mandala, rota e laco. */
 import { test, expect } from '@playwright/test'
 import { SCENES, LAYOUTS, solutions } from '../js/data/scenes.js'
-import { irPara, pausar, cenaAtual } from './helpers.js'
+import { irPara, pausar, cenaNoStore, cenaNaTela, esperarCena } from './helpers.js'
 
 test('o botao proxima avanca uma cena', async ({ page }) => {
   await irPara(page, SCENES[0].id)
   await page.click('#btn-proxima')
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(SCENES[1].id)
+  await esperarCena(page, SCENES[1])
 })
 
 test('o botao anterior volta uma cena', async ({ page }) => {
   await irPara(page, SCENES[3].id)
   await page.click('#btn-anterior')
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(SCENES[2].id)
+  await esperarCena(page, SCENES[2])
 })
 
 test('a apresentacao faz laco: da ultima volta para a primeira', async ({ page }) => {
   await irPara(page, SCENES.at(-1).id)
   await page.click('#btn-proxima')
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(SCENES[0].id)
+  await esperarCena(page, SCENES[0])
 })
 
 test('da primeira, anterior vai para a ultima', async ({ page }) => {
   await irPara(page, SCENES[0].id)
   await page.click('#btn-anterior')
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(SCENES.at(-1).id)
+  await esperarCena(page, SCENES.at(-1))
 })
 
 test('as setas do teclado navegam', async ({ page }) => {
   await irPara(page, SCENES[2].id)
   await page.keyboard.press('ArrowRight')
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(SCENES[3].id)
+  await esperarCena(page, SCENES[3])
   await page.keyboard.press('ArrowLeft')
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(SCENES[2].id)
+  await esperarCena(page, SCENES[2])
 })
 
 test('espaco alterna pausa e o rotulo do botao acompanha', async ({ page }) => {
@@ -51,7 +45,7 @@ test('espaco alterna pausa e o rotulo do botao acompanha', async ({ page }) => {
 test('a rota por hash abre a cena certa e o hash acompanha a navegacao', async ({ page }) => {
   const alvo = SCENES[7]
   await irPara(page, alvo.id)
-  expect(await cenaAtual(page)).toBe(alvo.id)
+  expect(await cenaNoStore(page)).toBe(alvo.id)
   await page.click('#btn-proxima')
   await page.waitForSelector('#app[data-scene-settled="true"]')
   await expect.poll(() => page.evaluate(() => location.hash)).toBe(`#/${SCENES[8].id}`)
@@ -61,8 +55,7 @@ test('hash desconhecido cai na primeira cena sem quebrar', async ({ page }) => {
   const erros = []
   page.on('pageerror', (e) => erros.push(e.message))
   await page.goto('/#/cena-que-nao-existe')
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(SCENES[0].id)
+  await esperarCena(page, SCENES[0])
   expect(erros).toEqual([])
 })
 
@@ -74,8 +67,7 @@ test('o menu abre, lista todas as cenas e navega', async ({ page }) => {
 
   const alvo = solutions().at(-1)
   await page.click(`.menu__item[data-ir="${alvo.id}"]`)
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(alvo.id)
+  await esperarCena(page, alvo)
   await expect(page.locator('#menu')).toBeHidden()
 })
 
@@ -99,8 +91,7 @@ test('tocar em um item da mandala abre aquela solucao', async ({ page }) => {
   await irPara(page, mandala.id)
   const alvo = solutions()[3]
   await page.click(`.mandala__item[data-ir="${alvo.id}"]`)
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(alvo.id)
+  await esperarCena(page, alvo)
 })
 
 test('a reproducao automatica avanca sozinha respeitando a duracao da cena', async ({ page }) => {
@@ -139,6 +130,5 @@ test('swipe navega em telas de toque', async ({ page, hasTouch }) => {
     alvo.dispatchEvent(evento('touchstart', 1200, 500))
     alvo.dispatchEvent(evento('touchend', 400, 510))
   })
-  await page.waitForSelector('#app[data-scene-settled="true"]')
-  expect(await cenaAtual(page)).toBe(SCENES[3].id)
+  await esperarCena(page, SCENES[3])
 })

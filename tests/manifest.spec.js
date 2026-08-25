@@ -22,10 +22,16 @@ test('o video nao tem narracao — nenhuma cena pode depender de audio', async (
 for (const cena of SCENES) {
   test(`cena "${cena.id}" renderiza com o titulo do manifesto`, async ({ page }) => {
     await irPara(page, cena.id)
+    await expect(page.locator('.cena .card')).toBeVisible()
     const h1 = page.locator('.cena h1')
-    await expect(h1).toBeVisible()
-    // O titulo pode vir com destaque tipografico; comparamos o texto puro.
-    expect((await h1.innerText()).replace(/\s+/g, ' ').trim())
+    await expect(h1).toHaveCount(1)
+    /*
+      textContent, nao innerText: innerText devolve o texto RENDERIZADO e
+      aplica text-transform, entao o nucleo da mandala (uppercase por CSS)
+      vinha "ECOSSISTEMA DE SOLUÇÕES" e nao batia com o manifesto. O que
+      importa aqui e o texto de origem, nao como o CSS o desenha.
+    */
+    expect((await h1.textContent()).replace(/\s+/g, ' ').trim())
       .toBe(cena.titulo.replace(/\s+/g, ' ').trim())
   })
 }
@@ -68,12 +74,18 @@ test('a mandala lista exatamente as solucoes do manifesto', async ({ page }) => 
   await irPara(page, mandala.id)
   // Compara pelo destino (data-ir), nao pelo textContent: alguns icones tem
   // <text> dentro do SVG ("AI", "0010 1101") e sujariam a leitura do rotulo.
+  // Conjunto, nao sequencia: a ordem no DOM segue as COLUNAS da roda
+  // (esquerda, direita, rodape), que e a disposicao do video, nao a ordem
+  // de leitura do manifesto.
   const destinos = await page.$$eval('.mandala__item', (els) => els.map((e) => e.dataset.ir))
-  expect(destinos).toEqual(solutions().map((s) => s.id))
+  expect(destinos.length).toBe(solutions().length)
+  expect(new Set(destinos)).toEqual(new Set(solutions().map((s) => s.id)))
 
-  // E o rotulo visivel de cada item e o titulo do manifesto.
-  const rotulos = await page.$$eval('.mandala__item > span', (els) => els.map((e) => e.textContent.trim()))
-  expect(rotulos).toEqual(solutions().map((s) => s.titulo))
+  // E o rotulo de cada pilula e o rotulo curto do manifesto.
+  const rotulos = await page.$$eval('.mandala__item > span',
+    (els) => els.map((e) => e.textContent.replace(/\s+/g, ' ').trim()))
+  const esperados = solutions().map((s) => (s.rotuloCurto ?? s.titulo).replace(/\*\*/g, ''))
+  expect(new Set(rotulos)).toEqual(new Set(esperados))
 })
 
 test('o contador do HUD acompanha o indice do manifesto', async ({ page }) => {

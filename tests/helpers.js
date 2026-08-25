@@ -18,8 +18,37 @@ export async function pausar (page) {
   await page.evaluate(() => globalThis.__cpqd.store.pausar())
 }
 
-export async function cenaAtual (page) {
+/** O que o STORE acha que esta na tela. */
+export async function cenaNoStore (page) {
   return page.evaluate(() => globalThis.__cpqd.store.snapshot().cena.id)
+}
+
+/** O que esta DESENHADO na tela: titulo do card e cena 3D montada. */
+export async function cenaNaTela (page) {
+  return page.evaluate(() => ({
+    titulo: (document.querySelector('.cena h1')?.textContent ?? '').replace(/\s+/g, ' ').trim(),
+    layout: document.querySelector('.cena .card')?.className ?? '',
+    scene3d: globalThis.__cpqd.stage.idAtual
+  }))
+}
+
+/**
+ * Afirma que a cena `esperada` esta REALMENTE na tela — nao so no store.
+ *
+ * Nasceu de um bug que a suite deixou passar inteira: escolher um item no
+ * menu mudava store, hash e HUD, e o card ficava na cena anterior. O teste
+ * antigo comparava `store.snapshot().cena.id`, entao passava com a tela
+ * errada. Estado nao e tela; aqui conferimos os dois.
+ */
+export async function esperarCena (page, cena) {
+  await page.waitForSelector('#app[data-scene-settled="true"]')
+  const esperado = cena.titulo.replace(/\s+/g, ' ').trim()
+  await expect.poll(
+    async () => (await cenaNaTela(page)).titulo,
+    { message: `o card na tela deveria ser "${esperado}"` }
+  ).toBe(esperado)
+  expect(await cenaNoStore(page), 'store e tela discordam').toBe(cena.id)
+  expect((await cenaNaTela(page)).scene3d, 'cena 3D nao acompanhou').toBe(cena.scene3d)
 }
 
 /** Interseccao de retangulos, com folga de 1px para arredondamento. */

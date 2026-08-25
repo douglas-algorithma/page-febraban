@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CPQD · Soluções Inteligentes para o setor Financeiro</title>
 <meta name="description" content="Versão interativa do vídeo institucional do CPQD no Febraban Tech.">
+<link rel="stylesheet" href="./css/fonts.css">
 <link rel="stylesheet" href="./css/tokens.css">
 <link rel="stylesheet" href="./css/base.css">
 <link rel="stylesheet" href="./css/scene.css">
@@ -39,7 +40,13 @@
     <p class="hud__contador" id="hud-contador"></p>
   </header>
 
-  <main id="cena" class="cena" tabindex="-1" aria-live="polite"></main>
+  <!--
+    Sem aria-live aqui: o innerHTML inteiro e trocado a cada cena e o leitor
+    de tela releria o card completo a cada ~7s em reproducao automatica.
+    O anuncio vai so pelo titulo, no #anuncio.
+  -->
+  <main id="cena" class="cena" tabindex="-1"></main>
+  <p id="anuncio" class="visualmente-oculto" aria-live="polite"></p>
 
   <nav id="hud-base" class="hud hud--base" aria-label="Controles de navegação">
     <button type="button" class="botao" id="btn-anterior" aria-label="Cena anterior">
@@ -60,7 +67,7 @@
     </button>
   </nav>
 
-  <aside id="menu" class="menu" hidden aria-label="Menu de soluções">
+  <aside id="menu" class="menu" hidden role="dialog" aria-modal="true" aria-label="Menu de soluções">
     <div class="menu__cabecalho">
       <h2 class="menu__titulo">Ecossistema de Soluções</h2>
       <button type="button" class="botao botao--fechar" id="btn-fechar-menu" aria-label="Fechar menu">

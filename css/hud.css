@@ -3,9 +3,6 @@
 .hud--topo { justify-content: space-between; min-height: var(--toque); }
 
 .hud__marca { font-size: 2rem; font-weight: 800; letter-spacing: 0.02em; }
-.marca__cpqd { color: var(--c-branco); }
-.cena[data-superficie="clara"] ~ .hud .marca__cpqd,
-#app[data-superficie="clara"] .marca__cpqd { color: var(--c-roxo); }
 
 .hud__pilar { margin: 0; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.9; }
 .hud__contador { margin: 0; font-size: 1.4rem; font-weight: 700; font-variant-numeric: tabular-nums; opacity: 0.75; }
@@ -66,4 +63,23 @@
   padding: var(--esp-2) var(--esp-4) var(--esp-2) var(--esp-3);
   margin: calc(var(--safe) * -1) 0 0 calc(var(--safe) * -1);
 }
-#app[data-superficie="clara"] .hud__marca .marca__cpqd { color: var(--c-branco); }
+
+
+/*
+  Marca CPQD — assets/cpqd-marca-*.svg, tracados a partir do proprio video
+  (geometria do selo de 254,5s; cor resolvida pelas equacoes de composicao
+  nos quadros de 15s e 249s, que tem fundo chapado).
+  A caixa do SVG e a SILHUETA (laco + letras). Largura em rem, entao dobra
+  sozinho no 4K junto com a raiz.
+*/
+.marca__cpqd {
+  display: block;
+  width: 12.75rem;                 /* letras ~200px em 1080p, ~400px em 4K */
+  aspect-ratio: 1000 / 363;
+  background: url("../assets/cpqd-marca-negativa.svg") left center / contain no-repeat;
+  font-size: 0; line-height: 0; color: transparent; overflow: hidden;
+}
+/*
+  Na superficie clara o .hud__marca vira o painel roxo do video, e a marca
+  continua NEGATIVA dentro dele. Nao e descuido — e o que o video faz.
+*/

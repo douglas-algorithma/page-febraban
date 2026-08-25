@@ -97,10 +97,14 @@ test('o layout escala por proporcao — mesma composicao em 1080p e 4K', async (
   await irPara(page, solucao.id)
   const vp = page.viewportSize()
   const titulo = await caixa(page, '.cena h1')
-  // A mesma fracao da tela em qualquer resolucao: e o que prova que a raiz
-  // em min(vw,vh) escala e que nao ha media query de resolucao escondida.
-  expect(titulo.x / vp.width).toBeGreaterThan(0.18)
-  expect(titulo.x / vp.width).toBeLessThan(0.32)
+  /*
+    A mesma fracao da tela em qualquer resolucao: e o que prova que a raiz em
+    min(vw,vh) escala e que nao ha media query de resolucao escondida.
+    A faixa vem do proprio video: no frame de 52s o titulo comeca a 43,5% da
+    largura, porque o terco esquerdo pertence a espiral e a moeda do pilar.
+  */
+  expect(titulo.x / vp.width).toBeGreaterThan(0.28)
+  expect(titulo.x / vp.width).toBeLessThan(0.50)
   expect(titulo.height / vp.height).toBeGreaterThan(0.05)
   expect(titulo.height / vp.height).toBeLessThan(0.25)
 })

@@ -11,23 +11,24 @@ export default function criar ({ THREE, cores }) {
 
   const OURO = 0xc9a227
 
-  const haloGeo = new THREE.CircleGeometry(2.2, 64)
-  const haloMat = new THREE.MeshBasicMaterial({ color: OURO, transparent: true, opacity: 0.12 })
+  const haloGeo = new THREE.CircleGeometry(2.9, 64)
+  const haloMat = new THREE.MeshBasicMaterial({ color: OURO, transparent: true, opacity: 0.07 })
   const halo = new THREE.Mesh(haloGeo, haloMat)
   halo.position.z = -2
   scene.add(halo)
 
-  const anelGeo = new THREE.TorusGeometry(1.15, 0.055, 20, 128)
+  // Sem aneis: no video o fundo e so um halo radial e o lockup dourado vive
+  // no DOM. Os toros anteriores cruzavam o "50" e sujavam a leitura.
+  const anelGeo = new THREE.TorusGeometry(1.62, 0.012, 12, 128)
   const anelMat = new THREE.MeshStandardMaterial({
     color: OURO, roughness: 0.22, metalness: 0.85, emissive: OURO, emissiveIntensity: 0.18
   })
   const anel = new THREE.Mesh(anelGeo, anelMat)
-  scene.add(anel)
+  anel.visible = false            // o video nao tem aneis; fica so o halo
 
-  const anel2Geo = new THREE.TorusGeometry(0.72, 0.045, 20, 128)
+  const anel2Geo = new THREE.TorusGeometry(1.78, 0.008, 12, 128)
   const anel2 = new THREE.Mesh(anel2Geo, anelMat)   // material compartilhado
-  anel2.position.set(0.42, -0.28, 0.05)
-  scene.add(anel2)
+  anel2.visible = false
 
   const luz = new THREE.DirectionalLight(0xfff2cc, 2.4)
   luz.position.set(-1, 1.5, 3)
@@ -43,7 +44,7 @@ export default function criar ({ THREE, cores }) {
     anel.rotation.z = t * 0.18
     anel.rotation.x = Math.sin(t * 0.4) * 0.22
     anel2.rotation.z = -t * 0.14
-    haloMat.opacity = 0.10 + Math.sin(t * 1.3) * 0.035
+    haloMat.opacity = 0.06 + Math.sin(t * 1.3) * 0.02
   }
 
   function dispose () {

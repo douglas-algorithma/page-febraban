@@ -6,7 +6,7 @@ html, body {
   overflow: hidden;              /* TV: nunca rola */
   background: var(--c-roxo-noite);
   color: var(--c-branco, #fff);
-  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--fonte);
   -webkit-font-smoothing: antialiased;
 }
 

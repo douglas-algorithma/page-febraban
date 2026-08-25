@@ -19,6 +19,7 @@ export function createHud ({ store }) {
   const btnProxima = document.getElementById('btn-proxima')
   const btnMenu = document.getElementById('btn-menu')
 
+  const anuncioEl = document.getElementById('anuncio')
   const total = totalDurationMs()
 
   btnAnterior.addEventListener('click', () => store.anterior('botao'))
@@ -37,11 +38,15 @@ export function createHud ({ store }) {
     btnPlayGlifo.textContent = s.tocando ? '❚❚' : '▶'
 
     btnMenu.setAttribute('aria-expanded', String(s.menuAberto))
+    // Anuncia so o titulo da cena, nao o card inteiro.
+    const anuncio = `${s.cena.titulo.replace(/\n/g, ' ')} — ${s.indice + 1} de ${s.total}`
+    if (anuncioEl.textContent !== anuncio) anuncioEl.textContent = anuncio
     atualizarProgresso(s)
   })
 
   function atualizarProgresso (s) {
-    const decorrido = startMsAt(s.indice) + Math.min(s.decorridoMs, s.cena.durationMs)
+    const dentro = Math.min(Math.max(s.decorridoMs, 0), s.cena.durationMs)
+    const decorrido = startMsAt(s.indice) + dentro
     const razao = Math.max(0, Math.min(decorrido / total, 1))
     barraEl.style.width = `${(razao * 100).toFixed(2)}%`
     progressoEl.setAttribute('aria-valuenow', String(Math.round(razao * 100)))
